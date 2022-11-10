@@ -21,7 +21,7 @@ public class InitRepositoryImpl implements InitRepository {
     private static final String QUERY_INIT_PRODUCTS =
             "CREATE TABLE PRODUCTS (ID SERIAL PRIMARY KEY, NAME TEXT, PRICE NUMERIC(9, 2));" +
                     "INSERT INTO PRODUCTS (NAME, PRICE) VALUES ('Киви', 98.50);" +
-                    "INSERT INTO PRODUCTS (NAME, PRICE) VALUES ('Яблоко', 135.00);" +
+                    "INSERT INTO PRODUCTS (NAME, PRICE) VALUES ('Яблоко', 135.25);" +
                     "INSERT INTO PRODUCTS (NAME, PRICE) VALUES ('Ананас', 320.80);" +
                     "INSERT INTO PRODUCTS (NAME, PRICE) VALUES ('Абрикос', 50.30);";
     private static final String QUERY_INIT_PURCHASES =
