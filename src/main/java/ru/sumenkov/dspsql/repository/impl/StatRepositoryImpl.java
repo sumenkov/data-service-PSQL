@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 
 public class StatRepositoryImpl implements StatRepository {
     private static final Logger log = Logger.getLogger(StatRepositoryImpl.class.getName());
-
     private final Connection conn;
     private final String startDate, endDate;
 

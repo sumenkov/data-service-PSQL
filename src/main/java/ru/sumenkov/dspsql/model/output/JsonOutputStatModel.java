@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 import java.util.List;
 
 public class JsonOutputStatModel {
-    private String TYPE = "stat";
+    private final String TYPE = "stat";
     private long totalDays;
     private List<StatBuyersOutputModel> customers;
     private double totalExpenses;
@@ -15,10 +15,6 @@ public class JsonOutputStatModel {
 
     public String getTYPE() {
         return TYPE;
-    }
-
-    public void setTYPE(String TYPE) {
-        this.TYPE = TYPE;
     }
 
     public long getTotalDays() {
@@ -51,16 +47,8 @@ public class JsonOutputStatModel {
         return totalExpenses;
     }
 
-    public void setTotalExpenses(double totalExpenses) {
-        this.totalExpenses = totalExpenses;
-    }
-
     public double getAvgExpenses() {
         return avgExpenses;
-    }
-
-    public void setAvgExpenses(double avgExpenses) {
-        this.avgExpenses = avgExpenses;
     }
 
     @Override

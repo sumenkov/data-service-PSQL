@@ -1,6 +1,5 @@
 package ru.sumenkov.dspsql.model.output;
 
-import ru.sumenkov.dspsql.model.db.BuyersModel;
 import ru.sumenkov.dspsql.model.db.ProductsModel;
 
 import java.util.List;
@@ -11,16 +10,6 @@ public class StatBuyersOutputModel {
     private double totalExpenses;
 
     public StatBuyersOutputModel() {}
-
-    public StatBuyersOutputModel(BuyersModel buyer, List<ProductsModel> products) {
-        this.name = buyer.getLastName() + " " + buyer.getFirstName();
-
-        this.purchases = products;
-
-        for(ProductsModel productsModel: purchases) {
-            this.totalExpenses += productsModel.getPrice();
-        }
-    }
 
     public String getName() {
         return name;
@@ -45,10 +34,6 @@ public class StatBuyersOutputModel {
 
     public double getTotalExpenses() {
         return totalExpenses;
-    }
-
-    public void setTotalExpenses(double totalExpenses) {
-        this.totalExpenses = totalExpenses;
     }
 
     @Override

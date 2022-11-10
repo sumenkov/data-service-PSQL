@@ -3,14 +3,13 @@ package ru.sumenkov.dspsql.service;
 import com.fasterxml.jackson.core.util.DefaultIndenter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ru.sumenkov.dspsql.model.output.JsonOutputStatModel;
 
 import java.io.File;
 import java.io.IOException;
 
-public class SaveStat {
+public class SaveJson {
 
-    public static void save(JsonOutputStatModel json) throws IOException {
+    public static void save(Object json) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         // Делаем отступы в 4 пробела (1 таб)

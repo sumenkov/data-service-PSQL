@@ -1,13 +1,13 @@
 package ru.sumenkov.dspsql;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ru.sumenkov.dspsql.model.input.JsonInputStatModel;
 import ru.sumenkov.dspsql.model.output.JsonOutputStatModel;
 import ru.sumenkov.dspsql.repository.StatRepository;
 import ru.sumenkov.dspsql.repository.impl.InitRepositoryImpl;
 import ru.sumenkov.dspsql.repository.impl.StatRepositoryImpl;
-import ru.sumenkov.dspsql.service.SaveStat;
+import ru.sumenkov.dspsql.service.SaveJson;
 
 import java.io.File;
 import java.io.FileReader;
@@ -31,9 +31,12 @@ public class Main {
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(new File("src/test/input_stat.json"));
-            String startDate = jsonNode.get("startDate").asText();
-            String endDate = jsonNode.get("endDate").asText();
+            JsonInputStatModel inputStatModel = objectMapper.readValue(
+                    new File("src/test/input_stat.json"),
+                    JsonInputStatModel.class);
+
+            String startDate = inputStatModel.getStartDate();
+            String endDate = inputStatModel.getEndDate();
 
 
             File file = new File("src/main/resources/db.properties");
@@ -54,7 +57,7 @@ public class Main {
                 jsonOutputStatModel.setCustomers(statRepository.getStatFromDB());
             }
 
-            SaveStat.save(jsonOutputStatModel);
+            SaveJson.save(jsonOutputStatModel);
 
         } catch (IOException | SQLException e) {
             log.log(Level.SEVERE, "Fail open connect", e);
