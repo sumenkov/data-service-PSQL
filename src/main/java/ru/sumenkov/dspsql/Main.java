@@ -3,6 +3,7 @@ package ru.sumenkov.dspsql;
 import ru.sumenkov.dspsql.model.db.BuyersModel;
 import ru.sumenkov.dspsql.model.output.StatBuyersOutput;
 import ru.sumenkov.dspsql.repository.impl.InitRepositoryImpl;
+import ru.sumenkov.dspsql.repository.impl.StatRepositoryImpl;
 
 import java.io.File;
 import java.io.FileReader;
@@ -10,6 +11,9 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,10 +33,9 @@ public class Main {
                     log.info("App stopped: fail init");
                 }
 
-//                new PurchasesRepositoryImpl(conn, new BuyersModel("Наталья", "")).getPurchases();
-                StatBuyersOutput statBuyersOutput = new StatBuyersOutput(conn, new BuyersModel("Пётр", "Кривошеев"));
-                System.out.println(statBuyersOutput);
-                System.out.println(statBuyersOutput.getPurchases().getPurchases());
+//                String startDate = LocalDate.parse("2022-10-01").format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+                System.out.println(new StatRepositoryImpl(conn, "2022-10-01", "2022-10-21").getStat());
+
             }
         } catch (IOException | SQLException e) {
             log.log(Level.SEVERE, "Fail open connect", e);

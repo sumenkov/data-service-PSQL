@@ -4,6 +4,8 @@ public class BuyersModel {
     private String firstName;
     private String lastName;
 
+    public BuyersModel() {}
+
     public BuyersModel(String firstName, String secondName) {
         this.firstName = firstName;
         this.lastName = secondName;

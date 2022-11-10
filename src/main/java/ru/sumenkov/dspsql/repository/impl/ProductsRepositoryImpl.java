@@ -27,13 +27,13 @@ public class ProductsRepositoryImpl implements ProductsRepository {
     }
 
     @Override
-    public List<ProductsModel> getPurchases() {
+    public List<ProductsModel> getProducts() {
         try (Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery(String.format(QUERY_PURCHASES, getIdBuyer()));
 
             return getProducts(rs);
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Fail find all man", e);
+            log.log(Level.SEVERE, "Fail get products", e);
             return null;
         }
     }

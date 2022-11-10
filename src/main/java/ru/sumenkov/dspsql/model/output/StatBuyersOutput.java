@@ -2,20 +2,22 @@ package ru.sumenkov.dspsql.model.output;
 
 import ru.sumenkov.dspsql.model.db.BuyersModel;
 import ru.sumenkov.dspsql.model.db.ProductsModel;
-import ru.sumenkov.dspsql.repository.ProductsRepository;
-import ru.sumenkov.dspsql.repository.impl.ProductsRepositoryImpl;
 
-import java.sql.Connection;
+import java.util.List;
 
 public class StatBuyersOutput {
     private String name;
-    private ProductsRepository purchases;
+    private List<ProductsModel> purchases;
     private double totalExpenses;
 
-    public StatBuyersOutput(Connection conn, BuyersModel buyer) {
+    public StatBuyersOutput() {}
+
+    public StatBuyersOutput(BuyersModel buyer, List<ProductsModel> products) {
         this.name = buyer.getLastName() + " " + buyer.getFirstName();
-        this.purchases = new ProductsRepositoryImpl(conn, buyer);
-        for(ProductsModel productsModel: purchases.getPurchases()) {
+
+        this.purchases = products;
+
+        for(ProductsModel productsModel: purchases) {
             this.totalExpenses += productsModel.getPrice();
         }
     }
@@ -28,12 +30,16 @@ public class StatBuyersOutput {
         this.name = name;
     }
 
-    public ProductsRepository getPurchases() {
+    public List<ProductsModel> getPurchases() {
         return purchases;
     }
 
-    public void setPurchases(ProductsRepository purchases) {
+    public void setPurchases(List<ProductsModel> purchases) {
         this.purchases = purchases;
+
+        for(ProductsModel productsModel: purchases) {
+            this.totalExpenses += productsModel.getPrice();
+        }
     }
 
     public double getTotalExpenses() {
