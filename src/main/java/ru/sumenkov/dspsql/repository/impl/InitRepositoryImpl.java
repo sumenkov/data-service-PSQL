@@ -19,11 +19,11 @@ public class InitRepositoryImpl implements InitRepository {
                     "INSERT INTO BUYERS (FIRSTNAME, LASTNAME) VALUES ('Пётр', 'Кривошеев');" +
                     "INSERT INTO BUYERS (FIRSTNAME) VALUES ('Наталья');";
     private static final String QUERY_INIT_PRODUCTS =
-            "CREATE TABLE PRODUCTS (ID SERIAL PRIMARY KEY, NAME TEXT, PRICE NUMERIC(9, 2));" +
-                    "INSERT INTO PRODUCTS (NAME, PRICE) VALUES ('Киви', 98.50);" +
-                    "INSERT INTO PRODUCTS (NAME, PRICE) VALUES ('Яблоко', 135.00);" +
-                    "INSERT INTO PRODUCTS (NAME, PRICE) VALUES ('Ананас', 320.80);" +
-                    "INSERT INTO PRODUCTS (NAME, PRICE) VALUES ('Абрикос', 50.30);";
+            "CREATE TABLE PRODUCTS (ID SERIAL PRIMARY KEY, NAME TEXT, EXPENSES NUMERIC(9, 2));" +
+                    "INSERT INTO PRODUCTS (NAME, EXPENSES) VALUES ('Киви', 98.50);" +
+                    "INSERT INTO PRODUCTS (NAME, EXPENSES) VALUES ('Яблоко', 135.00);" +
+                    "INSERT INTO PRODUCTS (NAME, EXPENSES) VALUES ('Ананас', 320.80);" +
+                    "INSERT INTO PRODUCTS (NAME, EXPENSES) VALUES ('Абрикос', 50.30);";
     private static final String QUERY_INIT_PURCHASES =
             "CREATE TABLE PURCHASES (ID SERIAL PRIMARY KEY, BUYERS_ID INTEGER, PRODUCTS_ID INTEGER, " +
                     "FOREIGN KEY (BUYERS_ID) REFERENCES BUYERS(ID), FOREIGN KEY (PRODUCTS_ID) REFERENCES PRODUCTS(ID)," +
@@ -31,6 +31,7 @@ public class InitRepositoryImpl implements InitRepository {
                     "INSERT INTO PURCHASES (BUYERS_ID, PRODUCTS_ID, DATE_OF_PURCHASE) VALUES (1, 2, '2022-11-01');" +
                     "INSERT INTO PURCHASES (BUYERS_ID, PRODUCTS_ID, DATE_OF_PURCHASE) VALUES (4, 1, '2022-11-05');" +
                     "INSERT INTO PURCHASES (BUYERS_ID, PRODUCTS_ID, DATE_OF_PURCHASE) VALUES (3, 3, '2022-10-21');" +
+                    "INSERT INTO PURCHASES (BUYERS_ID, PRODUCTS_ID, DATE_OF_PURCHASE) VALUES (2, 2, '2022-10-21');" +
                     "INSERT INTO PURCHASES (BUYERS_ID, PRODUCTS_ID, DATE_OF_PURCHASE) VALUES (3, 4, '2022-10-21');";
     private final Connection conn;
 
