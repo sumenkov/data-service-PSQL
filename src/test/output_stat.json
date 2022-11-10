@@ -1,0 +1,51 @@
+{
+  "type":"stat",
+  "totalDays":65,
+  "customers":[
+    {
+      "name":"Иванов Антон",
+      "purchases":[
+        {
+          "name":"Яблоко",
+          "price":135.0
+        }
+      ],
+      "totalExpenses":135.0
+    },
+    {
+      "name":"null Наталья",
+      "purchases":[
+        {
+          "name":"Киви",
+          "price":98.5
+        }
+      ],
+      "totalExpenses":98.5},
+    {
+      "name":"Кривошеев Пётр",
+      "purchases":[
+        {
+          "name":"Ананас",
+          "price":320.8
+        },
+        {
+          "name":"Абрикос",
+          "price":50.3
+        }
+      ],
+      "totalExpenses":371.1
+    },
+    {
+      "name":"Николенко Иван",
+      "purchases":[
+        {
+          "name":"Яблоко",
+          "price":135.0
+        }
+      ],
+      "totalExpenses":135.0
+    }
+  ],
+    "totalExpenses":739.6,
+    "avgExpenses":184.9
+  }

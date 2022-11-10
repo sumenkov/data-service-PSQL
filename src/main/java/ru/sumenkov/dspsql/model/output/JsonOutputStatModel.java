@@ -1,17 +1,13 @@
 package ru.sumenkov.dspsql.model.output;
 
-import ru.sumenkov.dspsql.model.db.ProductsModel;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
 public class JsonOutputStatModel {
     private String TYPE = "stat";
-
     private long totalDays;
     private List<StatBuyersOutputModel> customers;
-
     private double totalExpenses;
     private double avgExpenses;
 
@@ -46,9 +42,6 @@ public class JsonOutputStatModel {
         for (StatBuyersOutputModel statBuyer: customers) {
             allBuyers++;
             this.totalExpenses += statBuyer.getTotalExpenses();
-//            for (ProductsModel product: statBuyer.getPurchases()) {
-//                this.totalExpenses += product.getPrice();
-//            }
         }
 
         this.avgExpenses = round(totalExpenses / allBuyers);
