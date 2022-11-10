@@ -35,9 +35,8 @@ public class StatRepositoryImpl implements StatRepository {
             ResultSet rs = stmt.executeQuery(String.format(QUERY_PURCHASES, startDate, endDate));
 
             while (rs.next()){
-                int id = rs.getInt("BUYERS_ID");
-                String name = getNameBuyer(id);
-
+                String name = getNameBuyer(rs.getInt("BUYERS_ID"));
+                int idProduct = rs.getInt("PRODUCTS_ID");
 
                 StatBuyersOutputModel buyersOutput = statBuyersOutputList.stream()
                         .filter(statBuyersOutput -> name.equals(statBuyersOutput.getName()))
@@ -46,11 +45,11 @@ public class StatRepositoryImpl implements StatRepository {
 
                 if (buyersOutput.getName() == null) {
                     buyersOutput.setName(name);
-                    buyersOutput.setPurchases(getProducts(rs.getInt("PRODUCTS_ID")));
+                    buyersOutput.setPurchases(getProducts(idProduct));
 
                     statBuyersOutputList.add(buyersOutput);
                 } else {
-                    buyersOutput.setPurchases(getProducts(buyersOutput.getPurchases(), rs.getInt("PRODUCTS_ID")));
+                    buyersOutput.setPurchases(getProducts(buyersOutput.getPurchases(), idProduct));
                 }
             }
 
@@ -68,10 +67,12 @@ public class StatRepositoryImpl implements StatRepository {
             ResultSet rs = stmt.executeQuery(String.format(QUERY_BUYER, id));
 
             while (rs.next()){
-                name = rs.getString("LASTNAME") + " " + rs.getString("FIRSTNAME");
+                String lastName = rs.getString("LASTNAME") != null ? rs.getString("LASTNAME"): "";
+                String firstName = rs.getString("FIRSTNAME") != null ? rs.getString("FIRSTNAME"): "";
+                name = !lastName.equals("") || !firstName.equals("") ? lastName + " " + firstName: lastName+firstName;
             }
         }
-        return name;
+        return name.trim();
     }
 
     private List<ProductsModel> getProducts(int id) throws SQLException {
