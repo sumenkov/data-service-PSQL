@@ -2,7 +2,7 @@ package ru.sumenkov.dspsql.model.input;
 
 // Надо подумать...
 
-public class JsonInputSearch {
+public class JsonInputSearchModel {
     private Object[] criterias;
     private String lastName;
     private String productName;

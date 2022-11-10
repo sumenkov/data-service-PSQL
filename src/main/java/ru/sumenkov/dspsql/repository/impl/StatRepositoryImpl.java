@@ -1,7 +1,7 @@
 package ru.sumenkov.dspsql.repository.impl;
 
 import ru.sumenkov.dspsql.model.db.ProductsModel;
-import ru.sumenkov.dspsql.model.output.StatBuyersOutput;
+import ru.sumenkov.dspsql.model.output.StatBuyersOutputModel;
 import ru.sumenkov.dspsql.repository.StatRepository;
 
 import java.sql.*;
@@ -29,8 +29,8 @@ public class StatRepositoryImpl implements StatRepository {
     }
 
     @Override
-    public List<StatBuyersOutput> getStat() {
-        List<StatBuyersOutput> statBuyersOutputList = new ArrayList<>();
+    public List<StatBuyersOutputModel> getStatFromDB() {
+        List<StatBuyersOutputModel> statBuyersOutputList = new ArrayList<>();
 
         try (Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery(String.format(QUERY_PURCHASES, startDate, endDate));
@@ -40,10 +40,10 @@ public class StatRepositoryImpl implements StatRepository {
                 String name = getNameBuyer(id);
 
 
-                StatBuyersOutput buyersOutput = statBuyersOutputList.stream()
+                StatBuyersOutputModel buyersOutput = statBuyersOutputList.stream()
                         .filter(statBuyersOutput -> name.equals(statBuyersOutput.getName()))
                         .findAny()
-                        .orElse(new StatBuyersOutput());
+                        .orElse(new StatBuyersOutputModel());
 
                 if (buyersOutput.getName() == null) {
                     buyersOutput.setName(name);

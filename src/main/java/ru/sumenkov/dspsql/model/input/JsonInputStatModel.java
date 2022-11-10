@@ -2,11 +2,11 @@ package ru.sumenkov.dspsql.model.input;
 
 import java.util.Date;
 
-public class JsonInputStat {
+public class JsonInputStatModel {
     private Date startDate;
     private Date endDate;
 
-    public JsonInputStat(Date startDate, Date endDate) {
+    public JsonInputStatModel(Date startDate, Date endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
     }

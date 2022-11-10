@@ -5,14 +5,14 @@ import ru.sumenkov.dspsql.model.db.ProductsModel;
 
 import java.util.List;
 
-public class StatBuyersOutput {
+public class StatBuyersOutputModel {
     private String name;
     private List<ProductsModel> purchases;
     private double totalExpenses;
 
-    public StatBuyersOutput() {}
+    public StatBuyersOutputModel() {}
 
-    public StatBuyersOutput(BuyersModel buyer, List<ProductsModel> products) {
+    public StatBuyersOutputModel(BuyersModel buyer, List<ProductsModel> products) {
         this.name = buyer.getLastName() + " " + buyer.getFirstName();
 
         this.purchases = products;

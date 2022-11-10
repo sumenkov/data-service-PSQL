@@ -18,8 +18,9 @@
 
         <!-- dependency versions -->
         <commons-cli.version>1.5.0</commons-cli.version>
-        <json.version>20220924</json.version>
+<!--        <json.version>20220924</json.version>-->
         <postgresql.version>42.5.0</postgresql.version>
+        <jackson-databind.version>2.14.0</jackson-databind.version>
 
         <!-- plugin versions -->
         <maven-shade-plugin.version>3.4.0</maven-shade-plugin.version>
@@ -68,11 +69,17 @@
             <artifactId>commons-cli</artifactId>
             <version>${commons-cli.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.json/json -->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.json/json &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.json</groupId>-->
+<!--            <artifactId>json</artifactId>-->
+<!--            <version>${json.version}</version>-->
+<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
         <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>${json.version}</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-databind.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
         <dependency>
@@ -80,6 +87,5 @@
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
         </dependency>
-
     </dependencies>
 </project>

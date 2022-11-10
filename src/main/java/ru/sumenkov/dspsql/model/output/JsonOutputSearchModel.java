@@ -1,4 +1,4 @@
 package ru.sumenkov.dspsql.model.output;
 
-public class JsonOutputSearch {
+public class JsonOutputSearchModel {
 }
