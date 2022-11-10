@@ -5,5 +5,5 @@ import java.util.List;
 public class JsonOutputStat {
     private String TYPE = "stat";
     private int totalDays;
-    private List<BuyersOutput> customers;
+    private List<StatBuyersOutput> customers;
 }

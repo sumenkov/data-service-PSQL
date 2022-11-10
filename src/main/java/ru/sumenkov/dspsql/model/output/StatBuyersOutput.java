@@ -2,37 +2,37 @@ package ru.sumenkov.dspsql.model.output;
 
 import ru.sumenkov.dspsql.model.db.BuyersModel;
 import ru.sumenkov.dspsql.model.db.ProductsModel;
+import ru.sumenkov.dspsql.repository.ProductsRepository;
+import ru.sumenkov.dspsql.repository.impl.ProductsRepositoryImpl;
 
-import java.util.List;
+import java.sql.Connection;
 
-public class BuyersOutput {
-    private BuyersModel name;
-    private List<ProductsModel> purchases;
+public class StatBuyersOutput {
+    private String name;
+    private ProductsRepository purchases;
     private double totalExpenses;
 
-    public BuyersOutput(BuyersModel name) {
-        this.name = name;
-
-        this.purchases.add(new ProductsModel("", 0)); // собрать все покупки
-
-        for(ProductsModel productsModel: purchases) {
+    public StatBuyersOutput(Connection conn, BuyersModel buyer) {
+        this.name = buyer.getLastName() + " " + buyer.getFirstName();
+        this.purchases = new ProductsRepositoryImpl(conn, buyer);
+        for(ProductsModel productsModel: purchases.getPurchases()) {
             this.totalExpenses += productsModel.getPrice();
         }
     }
 
-    public BuyersModel getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(BuyersModel name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public List<ProductsModel> getPurchases() {
+    public ProductsRepository getPurchases() {
         return purchases;
     }
 
-    public void setPurchases(List<ProductsModel> purchases) {
+    public void setPurchases(ProductsRepository purchases) {
         this.purchases = purchases;
     }
 

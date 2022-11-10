@@ -1,5 +1,7 @@
 package ru.sumenkov.dspsql;
 
+import ru.sumenkov.dspsql.model.db.BuyersModel;
+import ru.sumenkov.dspsql.model.output.StatBuyersOutput;
 import ru.sumenkov.dspsql.repository.impl.InitRepositoryImpl;
 
 import java.io.File;
@@ -26,6 +28,9 @@ public class Main {
                 if (!init) {
                     log.info("App stopped: fail init");
                 }
+
+//                new PurchasesRepositoryImpl(conn, new BuyersModel("Наталья", "")).getPurchases();
+                System.out.println(new StatBuyersOutput(conn, new BuyersModel("Пётр", "Кривошеев")));
             }
         } catch (IOException | SQLException e) {
             log.log(Level.SEVERE, "Fail open connect", e);

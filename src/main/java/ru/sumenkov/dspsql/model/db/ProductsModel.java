@@ -4,9 +4,9 @@ public class ProductsModel {
     private String name;
     private double price;
 
-    public ProductsModel(String name, double expenses) {
+    public ProductsModel(String name, double price) {
         this.name = name;
-        this.price = expenses;
+        this.price = price;
     }
 
     public String getName() {
