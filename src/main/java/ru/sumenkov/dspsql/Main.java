@@ -1,7 +1,5 @@
 package ru.sumenkov.dspsql;
 
-import ru.sumenkov.dspsql.model.db.BuyersModel;
-import ru.sumenkov.dspsql.model.output.StatBuyersOutput;
 import ru.sumenkov.dspsql.repository.impl.InitRepositoryImpl;
 import ru.sumenkov.dspsql.repository.impl.StatRepositoryImpl;
 
@@ -11,9 +9,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;

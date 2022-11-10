@@ -36,6 +36,7 @@ public class StatBuyersOutput {
 
     public void setPurchases(List<ProductsModel> purchases) {
         this.purchases = purchases;
+        this.totalExpenses = 0;
 
         for(ProductsModel productsModel: purchases) {
             this.totalExpenses += productsModel.getPrice();

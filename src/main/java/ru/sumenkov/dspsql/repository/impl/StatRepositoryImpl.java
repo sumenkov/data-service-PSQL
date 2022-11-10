@@ -45,16 +45,13 @@ public class StatRepositoryImpl implements StatRepository {
                         .findAny()
                         .orElse(new StatBuyersOutput());
 
-                if (buyersOutput.getName().equals("")) {
+                if (buyersOutput.getName() == null) {
                     buyersOutput.setName(name);
-
-                    id = rs.getInt("PRODUCTS_ID");
-                    buyersOutput.setPurchases(getProducts(id));
+                    buyersOutput.setPurchases(getProducts(rs.getInt("PRODUCTS_ID")));
 
                     statBuyersOutputList.add(buyersOutput);
                 } else {
-                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    System.out.println("");
+                    buyersOutput.setPurchases(getProducts(buyersOutput.getPurchases(), rs.getInt("PRODUCTS_ID")));
                 }
             }
 
@@ -80,6 +77,10 @@ public class StatRepositoryImpl implements StatRepository {
 
     private List<ProductsModel> getProducts(int id) throws SQLException {
         List<ProductsModel> productsModelList = new ArrayList<>();
+        return getProducts(productsModelList, id);
+    }
+
+    private List<ProductsModel> getProducts(List<ProductsModel> productsModelList, int id) throws SQLException {
         try (Statement stmt = conn.createStatement()) {
             ResultSet rsProduct = stmt.executeQuery(String.format(QUERY_PRODUCTS, id));
             while (rsProduct.next()) {
