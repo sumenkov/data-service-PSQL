@@ -30,7 +30,9 @@ public class Main {
                 }
 
 //                new PurchasesRepositoryImpl(conn, new BuyersModel("Наталья", "")).getPurchases();
-                System.out.println(new StatBuyersOutput(conn, new BuyersModel("Пётр", "Кривошеев")));
+                StatBuyersOutput statBuyersOutput = new StatBuyersOutput(conn, new BuyersModel("Пётр", "Кривошеев"));
+                System.out.println(statBuyersOutput);
+                System.out.println(statBuyersOutput.getPurchases().getPurchases());
             }
         } catch (IOException | SQLException e) {
             log.log(Level.SEVERE, "Fail open connect", e);
