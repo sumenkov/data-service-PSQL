@@ -2,11 +2,11 @@ package ru.sumenkov.dspsql.model.db;
 
 public class ProductsModel {
     private String name;
-    private double expenses;
+    private double price;
 
     public ProductsModel(String name, double expenses) {
         this.name = name;
-        this.expenses = expenses;
+        this.price = expenses;
     }
 
     public String getName() {
@@ -17,19 +17,18 @@ public class ProductsModel {
         this.name = name;
     }
 
-    public double getExpenses() {
-        return expenses;
+    public double getPrice() {
+        return price;
     }
 
-    public void setExpenses(double expenses) {
-        this.expenses = expenses;
+    public void setPrice(double price) {
+        this.price = price;
     }
-
     @Override
     public String toString() {
         return "ProductsModel{" +
                 "name='" + name + '\'' +
-                ", price=" + expenses +
+                ", price=" + price +
                 '}';
     }
 }

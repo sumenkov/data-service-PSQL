@@ -16,7 +16,7 @@ public class BuyersOutput {
         this.purchases.add(new ProductsModel("", 0)); // собрать все покупки
 
         for(ProductsModel productsModel: purchases) {
-            this.totalExpenses += productsModel.getExpenses();
+            this.totalExpenses += productsModel.getPrice();
         }
     }
 
