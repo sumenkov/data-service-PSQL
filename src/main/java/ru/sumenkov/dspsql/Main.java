@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.cli.*;
 import ru.sumenkov.dspsql.model.input.JsonInputSearchModel;
 import ru.sumenkov.dspsql.model.input.JsonInputStatModel;
+import ru.sumenkov.dspsql.model.output.JsonOutputSearchModel;
 import ru.sumenkov.dspsql.model.output.JsonOutputStatModel;
 import ru.sumenkov.dspsql.repository.StatRepository;
 import ru.sumenkov.dspsql.repository.impl.InitRepositoryImpl;
@@ -69,8 +70,9 @@ public class Main {
 
                     System.out.println(inputSearchModel);
 
-//                    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-                    saveObject = inputSearchModel;
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+                    saveObject = new JsonOutputSearchModel();
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

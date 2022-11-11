@@ -1,18 +1,4 @@
 {
-    "criterias" : [
-        {
-            "lastName" : "Иванов"
-        },
-        {
-            "productName" : "Яблоко",
-            "minTimes" : 2
-        },
-        {
-            "minExpenses" : 90,
-            "maxExpenses" : 4000
-        },
-        {
-            "badCustomers" : 3
-        }
-    ]
+    "results" : null,
+    "type" : "search"
 }
