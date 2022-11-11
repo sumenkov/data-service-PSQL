@@ -69,6 +69,9 @@ public class Main {
 
                     System.out.println(inputSearchModel);
 
+//                    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+                    saveObject = inputSearchModel;
+
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
                 } else if (commandLine.hasOption("st")) {

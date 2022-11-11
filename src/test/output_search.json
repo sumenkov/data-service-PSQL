@@ -1,7 +1,18 @@
 {
-    "totalDays" : 0,
-    "customers" : null,
-    "totalExpenses" : 0.0,
-    "avgExpenses" : 0.0,
-    "type" : "stat"
+    "criterias" : [
+        {
+            "lastName" : "Иванов"
+        },
+        {
+            "productName" : "Яблоко",
+            "minTimes" : 2
+        },
+        {
+            "minExpenses" : 90,
+            "maxExpenses" : 4000
+        },
+        {
+            "badCustomers" : 3
+        }
+    ]
 }
