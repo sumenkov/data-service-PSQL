@@ -1,7 +1,10 @@
 package ru.sumenkov.dspsql;
 
+import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.apache.commons.cli.*;
 import ru.sumenkov.dspsql.model.input.JsonInputStatModel;
 import ru.sumenkov.dspsql.model.output.JsonOutputStatModel;
 import ru.sumenkov.dspsql.repository.StatRepository;
@@ -10,6 +13,7 @@ import ru.sumenkov.dspsql.repository.impl.StatRepositoryImpl;
 import ru.sumenkov.dspsql.service.SaveJson;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -28,40 +32,70 @@ import java.util.logging.Logger;
 public class Main {
     private static final Logger log = Logger.getLogger(Main.class.getName());
     public static void main(String[] args) {
-
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonInputStatModel inputStatModel = objectMapper.readValue(
-                    new File("src/test/input_stat.json"),
-                    JsonInputStatModel.class);
+            CommandLineParser commandLineParser = new DefaultParser();
+            Options options = new LaunchOptions().launchOptions();
 
-            String startDate = inputStatModel.getStartDate();
-            String endDate = inputStatModel.getEndDate();
+            if (args.length == 0) helper(options);
 
+            CommandLine commandLine = commandLineParser.parse(options, args);
+            String[] arguments = commandLine.getArgs();
+            String fileInput = arguments[0];
+            String fileOutput = arguments[1];
 
-            File file = new File("src/main/resources/db.properties");
+            File fileProperties = new File("src/main/resources/db.properties");
             Properties properties = new Properties();
             StatRepository statRepository;
 
-            JsonOutputStatModel jsonOutputStatModel = new JsonOutputStatModel();
-            jsonOutputStatModel.setTotalDays(getTotalDays(startDate, endDate));
+            properties.load(new FileReader(fileProperties));
 
-            properties.load(new FileReader(file));
+            JsonOutputStatModel jsonOutputStatModel = new JsonOutputStatModel();
+
             try (Connection conn = DriverManager.getConnection(properties.getProperty("url"), properties)) {
                 boolean init = new InitRepositoryImpl(conn).initTables();
                 if (!init) {
                     log.info("App stopped: fail init");
                 }
 
-                statRepository = new StatRepositoryImpl(conn, startDate, endDate);
-                jsonOutputStatModel.setCustomers(statRepository.getStatFromDB());
+                if (commandLine.hasOption("s")) {
+                    System.out.println("search");
+                } else if (commandLine.hasOption("st")) {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    JsonInputStatModel inputStatModel = objectMapper.readValue(
+                            new File(fileInput),
+                            JsonInputStatModel.class);
+
+                    String startDate = inputStatModel.getStartDate();
+                    String endDate = inputStatModel.getEndDate();
+
+                    jsonOutputStatModel.setTotalDays(getTotalDays(startDate, endDate));
+
+                    statRepository = new StatRepositoryImpl(conn, startDate, endDate);
+                    jsonOutputStatModel.setCustomers(statRepository.getStatFromDB());
+                }
             }
 
-            SaveJson.save(jsonOutputStatModel);
+            SaveJson.save(fileOutput, jsonOutputStatModel);
 
-        } catch (IOException | SQLException e) {
+        } catch (SQLException e) {
             log.log(Level.SEVERE, "Fail open connect", e);
+        } catch (ParseException e) {
+            log.log(Level.SEVERE, "Fail parse options command line", e);
+        } catch (FileNotFoundException e) {
+            log.log(Level.SEVERE, "Fail, file not found", e);
+        } catch (StreamReadException e) {
+            log.log(Level.SEVERE, "Fail Stream read", e);
+        } catch (DatabindException e) {
+            log.log(Level.SEVERE, "Fail Data bind", e);
+        } catch (IOException e) {
+            log.log(Level.SEVERE, "Fail save file", e);
         }
+    }
+
+    private static void helper(Options options){
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp("data-service-PSQL", options, true);
+        System.exit(0);
     }
 
     private static long getTotalDays(String startDate, String endDate) {
