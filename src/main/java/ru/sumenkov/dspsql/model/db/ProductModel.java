@@ -1,10 +1,10 @@
 package ru.sumenkov.dspsql.model.db;
 
-public class ProductsModel {
+public class ProductModel {
     private String name;
     private double price;
 
-    public ProductsModel(String name, double price) {
+    public ProductModel(String name, double price) {
         this.name = name;
         this.price = price;
     }

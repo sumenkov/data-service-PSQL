@@ -1,13 +1,22 @@
 package ru.sumenkov.dspsql.model.input;
 
-// Надо подумать...
+import java.util.List;
 
 public class JsonInputSearchModel {
-    private Object[] criterias;
-    private String lastName;
-    private String productName;
-    private int minTimes;
-    private double minExpenses;
-    private  double maxExpenses;
-    private int badCustomers;
+    private List<Object> criterias;
+
+    public JsonInputSearchModel(){
+
+    }
+
+    public List<Object> getCriterias() {
+        return criterias;
+    }
+
+    @Override
+    public String toString() {
+        return "JsonInputSearchModel{" +
+                "criterias=" + criterias +
+                '}';
+    }
 }

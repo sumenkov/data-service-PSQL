@@ -1,6 +1,7 @@
 package ru.sumenkov.dspsql.repository.impl;
 
-import ru.sumenkov.dspsql.model.db.ProductsModel;
+import ru.sumenkov.dspsql.model.db.BuyerModel;
+import ru.sumenkov.dspsql.model.db.ProductModel;
 import ru.sumenkov.dspsql.model.output.StatBuyersOutputModel;
 import ru.sumenkov.dspsql.repository.StatRepository;
 
@@ -52,7 +53,6 @@ public class StatRepositoryImpl implements StatRepository {
                     buyersOutput.setPurchases(getProducts(buyersOutput.getPurchases(), idProduct));
                 }
             }
-
         } catch (SQLException e) {
             log.log(Level.SEVERE, "Fail get stat", e);
             return null;
@@ -67,24 +67,25 @@ public class StatRepositoryImpl implements StatRepository {
             ResultSet rs = stmt.executeQuery(String.format(QUERY_BUYER, id));
 
             while (rs.next()){
-                String lastName = rs.getString("LASTNAME") != null ? rs.getString("LASTNAME"): "";
-                String firstName = rs.getString("FIRSTNAME") != null ? rs.getString("FIRSTNAME"): "";
-                name = !lastName.equals("") || !firstName.equals("") ? lastName + " " + firstName: lastName+firstName;
+                BuyerModel buyer = new BuyerModel(
+                        rs.getString("FIRSTNAME"),
+                        rs.getString("LASTNAME"));
+                name = buyer.toString();
             }
         }
         return name.trim();
     }
 
-    private List<ProductsModel> getProducts(int id) throws SQLException {
-        List<ProductsModel> productsModelList = new ArrayList<>();
+    private List<ProductModel> getProducts(int id) throws SQLException {
+        List<ProductModel> productsModelList = new ArrayList<>();
         return getProducts(productsModelList, id);
     }
 
-    private List<ProductsModel> getProducts(List<ProductsModel> productsModelList, int id) throws SQLException {
+    private List<ProductModel> getProducts(List<ProductModel> productsModelList, int id) throws SQLException {
         try (Statement stmt = conn.createStatement()) {
             ResultSet rsProduct = stmt.executeQuery(String.format(QUERY_PRODUCTS, id));
             while (rsProduct.next()) {
-                productsModelList.add(new ProductsModel(rsProduct.getString("name"),
+                productsModelList.add(new ProductModel(rsProduct.getString("name"),
                         rsProduct.getDouble("price")));
             }
         }

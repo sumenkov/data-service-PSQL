@@ -1,14 +1,14 @@
 package ru.sumenkov.dspsql.model.db;
 
-public class BuyersModel {
+public class BuyerModel {
     private String firstName;
     private String lastName;
 
-    public BuyersModel() {}
+    public BuyerModel() {}
 
-    public BuyersModel(String firstName, String secondName) {
-        this.firstName = firstName;
-        this.lastName = secondName;
+    public BuyerModel(String firstName, String lastName) {
+        this.firstName = firstName != null ? firstName: "";
+        this.lastName = lastName != null ? lastName: "";
     }
 
     public String getFirstName() {
@@ -29,9 +29,7 @@ public class BuyersModel {
 
     @Override
     public String toString() {
-        return "BuyersModel{" +
-                "firstName='" + firstName + '\'' +
-                ", secondName='" + lastName + '\'' +
-                '}';
+        String fullName = !lastName.equals("") || !firstName.equals("") ? lastName + " " + firstName: lastName+firstName;
+        return fullName.trim();
     }
 }

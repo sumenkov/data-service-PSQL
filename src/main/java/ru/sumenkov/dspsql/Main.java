@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.commons.cli.*;
+import ru.sumenkov.dspsql.model.input.JsonInputSearchModel;
 import ru.sumenkov.dspsql.model.input.JsonInputStatModel;
 import ru.sumenkov.dspsql.model.output.JsonOutputStatModel;
 import ru.sumenkov.dspsql.repository.StatRepository;
@@ -58,7 +59,14 @@ public class Main {
                 }
 
                 if (commandLine.hasOption("s")) {
-                    System.out.println("search");
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    JsonInputSearchModel inputSearchModel = objectMapper.readValue(
+                            new File(fileInput),
+                            JsonInputSearchModel.class);
+
+                    System.out.println(inputSearchModel);
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 } else if (commandLine.hasOption("st")) {
                     ObjectMapper objectMapper = new ObjectMapper();
                     JsonInputStatModel inputStatModel = objectMapper.readValue(
