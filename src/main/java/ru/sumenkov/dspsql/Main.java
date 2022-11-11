@@ -26,6 +26,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,7 +43,9 @@ public class Main {
             CommandLine commandLine = commandLineParser.parse(options, args);
             String[] arguments = commandLine.getArgs();
             String fileInput = arguments[0];
+
             String fileOutput = arguments[1];
+            Object saveObject = new Object();
 
             File fileProperties = new File("src/main/resources/db.properties");
             Properties properties = new Properties();
@@ -66,7 +69,8 @@ public class Main {
 
                     System.out.println(inputSearchModel);
 
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
                 } else if (commandLine.hasOption("st")) {
                     ObjectMapper objectMapper = new ObjectMapper();
                     JsonInputStatModel inputStatModel = objectMapper.readValue(
@@ -80,10 +84,12 @@ public class Main {
 
                     statRepository = new StatRepositoryImpl(conn, startDate, endDate);
                     jsonOutputStatModel.setCustomers(statRepository.getStatFromDB());
+
+                    saveObject = jsonOutputStatModel;
                 }
             }
 
-            SaveJson.save(fileOutput, jsonOutputStatModel);
+            SaveJson.save(fileOutput, saveObject);
 
         } catch (SQLException e) {
             log.log(Level.SEVERE, "Fail open connect", e);
