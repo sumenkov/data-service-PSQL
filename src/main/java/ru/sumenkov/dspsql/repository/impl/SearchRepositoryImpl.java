@@ -18,14 +18,8 @@ public class SearchRepositoryImpl implements SearchRepository {
     private final Connection conn;
 
     private static final String QUERY_BUYER = "SELECT FIRSTNAME, LASTNAME FROM BUYERS WHERE LASTNAME='%s'";
-    private static final String QUERY_PRODUCT = "SELECT b.firstname, b.lastname FROM buyers b " +
-            "LEFT JOIN purchases pur ON pur.buyer_id = b.id " +
-            "GROUP BY b.firstname, b.lastname " +
-            "ORDER BY COUNT(*) LIMIT %d";
-    private static final String QUERY_EXPENSES = "SELECT b.firstname, b.lastname FROM buyers b " +
-            "LEFT JOIN purchases pur ON pur.buyer_id = b.id " +
-            "GROUP BY b.firstname, b.lastname " +
-            "ORDER BY COUNT(*) LIMIT %d";
+    private static final String QUERY_PRODUCT = "";
+    private static final String QUERY_EXPENSES = "";
     private static final String QUERY_BAD_CUSTOMERS = "SELECT b.firstname, b.lastname FROM buyers b " +
             "LEFT JOIN purchases pur ON pur.buyer_id = b.id " +
             "GROUP BY b.firstname, b.lastname " +
@@ -60,7 +54,7 @@ public class SearchRepositoryImpl implements SearchRepository {
     @Override
     public List<BuyerModel> searchExpenses(double min, double max) {
         try (Statement stmt = conn.createStatement()) {
-            ResultSet rs = stmt.executeQuery(String.format(QUERY_BUYER, min, max));
+            ResultSet rs = stmt.executeQuery(String.format(QUERY_EXPENSES, min, max));
             return setQuery(rs);
         } catch (SQLException e) {
             log.log(Level.SEVERE, "Fail search expenses", e);
