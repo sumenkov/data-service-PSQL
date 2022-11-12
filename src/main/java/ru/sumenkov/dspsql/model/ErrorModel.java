@@ -2,7 +2,7 @@ package ru.sumenkov.dspsql.model;
 
 public class ErrorModel {
     private final String TYPE = "error";
-    private String message;
+    private final String message;
 
     public ErrorModel(String message) {
         this.message = message;
@@ -14,10 +14,6 @@ public class ErrorModel {
 
     public String getMessage() {
         return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     @Override
