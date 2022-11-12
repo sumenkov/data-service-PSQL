@@ -3,15 +3,16 @@ package ru.sumenkov.dspsql.model.output;
 import ru.sumenkov.dspsql.model.input.JsonInputSearchModel;
 
 import java.util.List;
+import java.util.Map;
 
 public class JsonOutputSearchModel {
     private final String TYPE = "search";
-    private List<Object> results;
+    private SearchCriteriaOutputModel results;
 
     public JsonOutputSearchModel() {
     }
 
-    public JsonOutputSearchModel(List<Object> results) {
+    public JsonOutputSearchModel(SearchCriteriaOutputModel results) {
         this.results = results;
     }
 
@@ -19,20 +20,16 @@ public class JsonOutputSearchModel {
         return TYPE;
     }
 
-    public List<Object> getResults() {
+    public SearchCriteriaOutputModel getResults() {
         return results;
     }
 
-    public void setResults(List<Object> results) {
+    public void setResults(SearchCriteriaOutputModel results) {
         this.results = results;
     }
 
-    public void setResults(JsonInputSearchModel results) {
-        this.results.add(results);
-    }
-
-    public void setResults(SearchBuyersOutputModel results) {
-        this.results.add(results);
+    public void setResults(Map<String, Object> criterion) {
+        this.results.setCriteria(criterion);
     }
 
     @Override

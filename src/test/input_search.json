@@ -1,8 +1,8 @@
 {
   "criterias": [
-    {"lastName": "Иванов"},
+    {"lastName": "Кривошеев"},
     {"productName": "Ананас", "minTimes": 2},
-    {"minExpenses": 90, "maxExpenses": 4000},
+    {"minExpenses": 100, "maxExpenses": 300},
     {"badCustomers": 3}
   ]
 }

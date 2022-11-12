@@ -1,4 +1,7 @@
 {
-    "results" : null,
+    "results" : {
+        "criteria" : { },
+        "results" : [ ]
+    },
     "type" : "search"
 }

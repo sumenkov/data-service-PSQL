@@ -9,10 +9,13 @@ import ru.sumenkov.dspsql.model.input.JsonInputSearchModel;
 import ru.sumenkov.dspsql.model.input.JsonInputStatModel;
 import ru.sumenkov.dspsql.model.output.JsonOutputSearchModel;
 import ru.sumenkov.dspsql.model.output.JsonOutputStatModel;
+import ru.sumenkov.dspsql.model.output.SearchBuyersOutputModel;
+import ru.sumenkov.dspsql.model.output.SearchCriteriaOutputModel;
 import ru.sumenkov.dspsql.repository.StatRepository;
 import ru.sumenkov.dspsql.repository.impl.InitRepositoryImpl;
 import ru.sumenkov.dspsql.repository.impl.StatRepositoryImpl;
 import ru.sumenkov.dspsql.service.SaveJson;
+import ru.sumenkov.dspsql.service.SearchService;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,6 +31,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,7 +55,7 @@ public class Main {
 
             File fileProperties = new File("src/main/resources/db.properties");
             Properties properties = new Properties();
-            StatRepository statRepository;
+//            StatRepository statRepository;
 
             properties.load(new FileReader(fileProperties));
 
@@ -69,10 +74,13 @@ public class Main {
                             JsonInputSearchModel.class);
 
                     System.out.println(inputSearchModel);
+                    new SearchService().search(inputSearchModel);
+
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-                    saveObject = new JsonOutputSearchModel();
+                    // saveObject = new SearchService(conn, inputSearchModel);
+                    saveObject = new JsonOutputSearchModel(new SearchCriteriaOutputModel(new HashMap<String, Object>(), new ArrayList<>()));
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -87,7 +95,7 @@ public class Main {
 
                     jsonOutputStatModel.setTotalDays(getTotalDays(startDate, endDate));
 
-                    statRepository = new StatRepositoryImpl(conn, startDate, endDate);
+                    StatRepository statRepository = new StatRepositoryImpl(conn, startDate, endDate);
                     jsonOutputStatModel.setCustomers(statRepository.getStatFromDB());
 
                     saveObject = jsonOutputStatModel;

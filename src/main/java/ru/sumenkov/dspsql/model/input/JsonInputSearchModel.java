@@ -1,15 +1,16 @@
 package ru.sumenkov.dspsql.model.input;
 
 import java.util.List;
+import java.util.Map;
 
 public class JsonInputSearchModel {
-    private List<Object> criterias;
+    private List<Map<String, Object>> criterias;
 
     public JsonInputSearchModel(){
 
     }
 
-    public List<Object> getCriterias() {
+    public List<Map<String, Object>> getCriterias() {
         return criterias;
     }
 
