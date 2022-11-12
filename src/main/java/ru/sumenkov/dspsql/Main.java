@@ -104,17 +104,22 @@ public class Main {
     private static long getTotalDays(String startDate, String endDate) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        LocalDateTime date1 = LocalDate.parse(startDate, dtf).atStartOfDay();
-        LocalDateTime date2 = LocalDate.parse(endDate, dtf).atStartOfDay();
+        try {
+            LocalDateTime date1 = LocalDate.parse(startDate, dtf).atStartOfDay();
+            LocalDateTime date2 = LocalDate.parse(endDate, dtf).atStartOfDay();
 
-        int days = 0;
-        while(date1.isBefore(date2.plusDays(1))) {
-            if (!DayOfWeek.SATURDAY.equals(date1.getDayOfWeek())
-                    && !DayOfWeek.SUNDAY.equals(date1.getDayOfWeek())) {
-                days++;
+            int days = 0;
+            while(date1.isBefore(date2.plusDays(1))) {
+                if (!DayOfWeek.SATURDAY.equals(date1.getDayOfWeek())
+                        && !DayOfWeek.SUNDAY.equals(date1.getDayOfWeek())) {
+                    days++;
+                }
+                date1 = date1.plusDays(1);
             }
-            date1 = date1.plusDays(1);
+            return days;
+        } catch (Exception e) {
+            new SaveException(e.getMessage());
         }
-        return days;
+        return 0;
     }
 }

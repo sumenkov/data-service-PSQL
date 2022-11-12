@@ -5,6 +5,6 @@ import ru.sumenkov.dspsql.service.SaveJson;
 
 public class SaveException {
     public SaveException(String message) {
-        SaveJson.save("./Error.json", new ErrorModel(message));
+        SaveJson.save("Error.json", new ErrorModel(message));
     }
 }
