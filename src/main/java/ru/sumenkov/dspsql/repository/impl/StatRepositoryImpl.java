@@ -1,5 +1,6 @@
 package ru.sumenkov.dspsql.repository.impl;
 
+import ru.sumenkov.dspsql.SaveException;
 import ru.sumenkov.dspsql.model.db.BuyerModel;
 import ru.sumenkov.dspsql.model.db.ProductModel;
 import ru.sumenkov.dspsql.model.output.StatBuyersOutputModel;
@@ -9,11 +10,8 @@ import java.sql.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class StatRepositoryImpl implements StatRepository {
-    private static final Logger log = Logger.getLogger(StatRepositoryImpl.class.getName());
     private final Connection conn;
     private final String startDate, endDate;
 
@@ -54,7 +52,7 @@ public class StatRepositoryImpl implements StatRepository {
                 }
             }
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Fail get stat", e);
+            new SaveException(e.getMessage());
             return null;
         }
         return statBuyersOutputList;

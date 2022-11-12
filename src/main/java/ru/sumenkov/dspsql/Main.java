@@ -1,11 +1,9 @@
 package ru.sumenkov.dspsql;
 
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.commons.cli.*;
 
-import ru.sumenkov.dspsql.model.ErrorModel;
 import ru.sumenkov.dspsql.model.input.JsonInputSearchModel;
 import ru.sumenkov.dspsql.model.input.JsonInputStatModel;
 import ru.sumenkov.dspsql.model.output.JsonOutputSearchModel;
@@ -16,7 +14,6 @@ import ru.sumenkov.dspsql.service.SaveJson;
 import ru.sumenkov.dspsql.service.SearchService;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -93,14 +90,8 @@ public class Main {
 
             SaveJson.save(fileOutput, saveObject);
 
-        } catch (SQLException e) {
-            SaveJson.save(fileOutput, new ErrorModel("Ошибка соединения с БД"));
-        } catch (FileNotFoundException e) {
-            SaveJson.save(fileOutput, new ErrorModel("Файл input не найден"));
-        } catch (DatabindException e) {
-            SaveJson.save(fileOutput, new ErrorModel("Не получилось собрать json для сохранения"));
-        } catch (IOException e) {
-            SaveJson.save(fileOutput, new ErrorModel("Не удалось сохранить файл"));
+        } catch (SQLException | IOException e) {
+            new SaveException(e.getMessage());
         }
     }
 

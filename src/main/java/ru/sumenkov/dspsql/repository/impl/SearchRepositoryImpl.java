@@ -1,5 +1,6 @@
 package ru.sumenkov.dspsql.repository.impl;
 
+import ru.sumenkov.dspsql.SaveException;
 import ru.sumenkov.dspsql.model.db.BuyerModel;
 import ru.sumenkov.dspsql.repository.SearchRepository;
 
@@ -9,12 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class SearchRepositoryImpl implements SearchRepository {
-    private static final Logger log = Logger.getLogger(SearchRepositoryImpl.class.getName());
-
     private final Connection conn;
 
     private static final String QUERY_BUYER = "SELECT firstname, lastname " +
@@ -50,7 +47,7 @@ public class SearchRepositoryImpl implements SearchRepository {
             ResultSet rs = stmt.executeQuery(String.format(QUERY_BUYER, lastname));
             return setQuery(rs);
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Fail search buyer", e);
+            new SaveException(e.getMessage());
             return null;
         }
     }
@@ -61,7 +58,7 @@ public class SearchRepositoryImpl implements SearchRepository {
             ResultSet rs = stmt.executeQuery(String.format(QUERY_PRODUCT, name, amount));
             return setQuery(rs);
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Fail search product", e);
+            new SaveException(e.getMessage());
             return null;
         }
     }
@@ -72,7 +69,7 @@ public class SearchRepositoryImpl implements SearchRepository {
             ResultSet rs = stmt.executeQuery(String.format(QUERY_EXPENSES, min, max));
             return setQuery(rs);
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Fail search expenses", e);
+            new SaveException(e.getMessage());
             return null;
         }
     }
@@ -83,7 +80,7 @@ public class SearchRepositoryImpl implements SearchRepository {
             ResultSet rs = stmt.executeQuery(String.format(QUERY_BAD_CUSTOMERS, amount));
             return setQuery(rs);
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Fail search bad customers", e);
+            new SaveException(e.getMessage());
             return null;
         }
     }
