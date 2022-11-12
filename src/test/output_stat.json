@@ -2,6 +2,24 @@
     "totalDays" : 65,
     "customers" : [
         {
+            "name" : "Кривошеев Пётр",
+            "purchases" : [
+                {
+                    "name" : "Ананас",
+                    "price" : 320.8
+                },
+                {
+                    "name" : "Ананас",
+                    "price" : 320.8
+                },
+                {
+                    "name" : "Абрикос",
+                    "price" : 50.3
+                }
+            ],
+            "totalExpenses" : 691.9
+        },
+        {
             "name" : "Иванов Антон",
             "purchases" : [
                 {
@@ -12,7 +30,7 @@
             "totalExpenses" : 135.25
         },
         {
-            "name" : "Наталья",
+            "name" : "Семёнов Семён",
             "purchases" : [
                 {
                     "name" : "Киви",
@@ -20,20 +38,6 @@
                 }
             ],
             "totalExpenses" : 98.5
-        },
-        {
-            "name" : "Кривошеев Пётр",
-            "purchases" : [
-                {
-                    "name" : "Ананас",
-                    "price" : 320.8
-                },
-                {
-                    "name" : "Абрикос",
-                    "price" : 50.3
-                }
-            ],
-            "totalExpenses" : 371.1
         },
         {
             "name" : "Николенко Иван",
@@ -46,7 +50,7 @@
             "totalExpenses" : 135.25
         }
     ],
-    "totalExpenses" : 740.1,
-    "avgExpenses" : 185.03,
+    "totalExpenses" : 1060.9,
+    "avgExpenses" : 265.23,
     "type" : "stat"
 }
