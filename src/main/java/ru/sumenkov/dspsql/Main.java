@@ -1,6 +1,5 @@
 package ru.sumenkov.dspsql;
 
-import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -101,18 +100,31 @@ public class Main {
         } catch (SQLException e) {
             log.log(Level.SEVERE, "Fail open connect", e);
             try {
-                SaveJson.save(fileOutput, new ErrorModel("Fail open connect"));
+                SaveJson.save(fileOutput, new ErrorModel("Ошибка соединения с БД"));
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         } catch (FileNotFoundException e) {
             log.log(Level.SEVERE, "Fail, file not found", e);
-        } catch (StreamReadException e) {
-            log.log(Level.SEVERE, "Fail Stream read", e);
+            try {
+                SaveJson.save(fileOutput, new ErrorModel("Файл input не найден"));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         } catch (DatabindException e) {
             log.log(Level.SEVERE, "Fail Data bind", e);
+            try {
+                SaveJson.save(fileOutput, new ErrorModel("Не получилось собрать json для сохранения"));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         } catch (IOException e) {
             log.log(Level.SEVERE, "Fail save file", e);
+            try {
+                SaveJson.save(fileOutput, new ErrorModel("Не удалось сохранить файл"));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 
