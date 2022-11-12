@@ -17,17 +17,28 @@ public class SearchRepositoryImpl implements SearchRepository {
 
     private final Connection conn;
 
-    private static final String QUERY_BUYER = "SELECT firstname, lastname FROM buyers WHERE lastname='%s'";
-    private static final String QUERY_PRODUCT = "SELECT b.firstname, b.lastname FROM buyers b " +
+    private static final String QUERY_BUYER = "SELECT firstname, lastname " +
+            "FROM buyers " +
+            "WHERE lastname='%s'";
+    private static final String QUERY_PRODUCT = "SELECT b.firstname, b.lastname " +
+            "FROM buyers b " +
             "JOIN purchases pur ON b.id = pur.buyer_id " +
             "JOIN products pr ON pur.product_id = pr.id " +
             "WHERE pr.name = '%s' " +
-            "GROUP BY b.id HAVING COUNT(*) >= %d";
-    private static final String QUERY_EXPENSES = "";
-    private static final String QUERY_BAD_CUSTOMERS = "SELECT b.firstname, b.lastname FROM buyers b " +
+            "GROUP BY b.id " +
+            "HAVING COUNT(*) >= %d";
+    private static final String QUERY_EXPENSES = " SELECT b.firstname, b.lastname " +
+            "FROM buyers b " +
+            "JOIN purchases pur ON b.id = pur.buyer_id " +
+            "JOIN products pr ON pur.product_id = pr.id " +
+            "GROUP BY b.id " +
+            "HAVING SUM(pr.price) BETWEEN %d AND %d";
+    private static final String QUERY_BAD_CUSTOMERS = "SELECT b.firstname, b.lastname " +
+            "FROM buyers b " +
             "JOIN purchases pur ON pur.buyer_id = b.id " +
             "GROUP BY b.id " +
-            "ORDER BY COUNT(*) LIMIT %d";
+            "ORDER BY COUNT(*) ASC" +
+            "LIMIT %d";
 
     public SearchRepositoryImpl(Connection conn) {
         this.conn = conn;
@@ -56,7 +67,7 @@ public class SearchRepositoryImpl implements SearchRepository {
     }
 
     @Override
-    public List<BuyerModel> searchExpenses(double min, double max) {
+    public List<BuyerModel> searchExpenses(int min, int max) {
         try (Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery(String.format(QUERY_EXPENSES, min, max));
             return setQuery(rs);
