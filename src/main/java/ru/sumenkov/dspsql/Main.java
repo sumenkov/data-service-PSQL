@@ -34,7 +34,10 @@ public class Main {
         CommandLineParser commandLineParser = new DefaultParser();
         Options options = new LaunchOptions().launchOptions();
 
-        if (args.length == 0) helper(options);
+        if (args.length == 0) {
+            helper(options);
+            return;
+        }
 
         CommandLine commandLine;
         try {
@@ -98,7 +101,6 @@ public class Main {
     private static void helper(Options options){
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("data-service-PSQL", options, true);
-        System.exit(0);
     }
 
     private static long getTotalDays(String startDate, String endDate) {
