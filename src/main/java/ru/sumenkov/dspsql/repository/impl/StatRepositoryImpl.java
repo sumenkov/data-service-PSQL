@@ -17,7 +17,7 @@ public class StatRepositoryImpl implements StatRepository {
     private final Connection conn;
     private final String startDate, endDate;
 
-    private static final String QUERY_PURCHASES = "SELECT BUYERS_ID, PRODUCTS_ID FROM PURCHASES WHERE " +
+    private static final String QUERY_PURCHASES = "SELECT BUYER_ID, PRODUCT_ID FROM PURCHASES WHERE " +
             "DATE_OF_PURCHASE >= '%s' AND DATE_OF_PURCHASE <= '%s'";
     private static final String QUERY_BUYER = "SELECT FIRSTNAME, LASTNAME FROM BUYERS WHERE ID=%d";
     private static final String QUERY_PRODUCTS = "SELECT NAME, PRICE FROM PRODUCTS WHERE ID=%d";
@@ -36,8 +36,8 @@ public class StatRepositoryImpl implements StatRepository {
             ResultSet rs = stmt.executeQuery(String.format(QUERY_PURCHASES, startDate, endDate));
 
             while (rs.next()){
-                String name = getNameBuyer(rs.getInt("BUYERS_ID"));
-                int idProduct = rs.getInt("PRODUCTS_ID");
+                String name = getNameBuyer(rs.getInt("BUYER_ID"));
+                int idProduct = rs.getInt("PRODUCT_ID");
 
                 StatBuyersOutputModel buyersOutput = statBuyersOutputList.stream()
                         .filter(statBuyersOutput -> name.equals(statBuyersOutput.getName()))
