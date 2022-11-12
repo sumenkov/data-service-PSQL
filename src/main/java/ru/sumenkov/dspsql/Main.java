@@ -12,7 +12,6 @@ import ru.sumenkov.dspsql.model.input.JsonInputStatModel;
 import ru.sumenkov.dspsql.model.output.JsonOutputSearchModel;
 import ru.sumenkov.dspsql.model.output.JsonOutputStatModel;
 import ru.sumenkov.dspsql.repository.StatRepository;
-import ru.sumenkov.dspsql.repository.impl.InitRepositoryImpl;
 import ru.sumenkov.dspsql.repository.impl.StatRepositoryImpl;
 import ru.sumenkov.dspsql.service.SaveJson;
 import ru.sumenkov.dspsql.service.SearchService;
@@ -64,10 +63,6 @@ public class Main {
             properties.load(new FileReader(fileProperties));
 
             try (Connection conn = DriverManager.getConnection(properties.getProperty("url"), properties)) {
-                boolean init = new InitRepositoryImpl(conn).initTables();
-                if (!init) {
-                    log.info("App stopped: fail init");
-                }
 
                 if (commandLine.hasOption("s")) {
                     ObjectMapper objectMapper = new ObjectMapper();
