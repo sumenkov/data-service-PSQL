@@ -1,7 +1,67 @@
 {
-    "results" : {
-        "criteria" : { },
-        "results" : [ ]
-    },
+    "results" : [
+        {
+            "criteria" : {
+                "lastName" : "Кривошеев"
+            },
+            "results" : [
+                {
+                    "firstName" : "Пётр",
+                    "lastName" : "Кривошеев"
+                },
+                {
+                    "firstName" : "",
+                    "lastName" : "Кривошеев"
+                }
+            ]
+        },
+        {
+            "criteria" : {
+                "productName" : "Ананас",
+                "minTimes" : 2
+            },
+            "results" : [
+                {
+                    "firstName" : "Пётр",
+                    "lastName" : "Кривошеев"
+                }
+            ]
+        },
+        {
+            "criteria" : {
+                "minExpenses" : 100,
+                "maxExpenses" : 300
+            },
+            "results" : [
+                {
+                    "firstName" : "Иван",
+                    "lastName" : "Николенко"
+                },
+                {
+                    "firstName" : "Антон",
+                    "lastName" : "Иванов"
+                }
+            ]
+        },
+        {
+            "criteria" : {
+                "badCustomers" : 3
+            },
+            "results" : [
+                {
+                    "firstName" : "Иван",
+                    "lastName" : "Николенко"
+                },
+                {
+                    "firstName" : "",
+                    "lastName" : "Кривошеев"
+                },
+                {
+                    "firstName" : "Наталья",
+                    "lastName" : ""
+                }
+            ]
+        }
+    ],
     "type" : "search"
 }

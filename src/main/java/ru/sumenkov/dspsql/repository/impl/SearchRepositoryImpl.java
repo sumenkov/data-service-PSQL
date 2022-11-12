@@ -37,7 +37,7 @@ public class SearchRepositoryImpl implements SearchRepository {
             "FROM buyers b " +
             "LEFT JOIN purchases pur ON pur.buyer_id = b.id " +
             "GROUP BY b.id " +
-            "ORDER BY COUNT(*) ASC" +
+            "ORDER BY COUNT(*) ASC " +
             "LIMIT %d";
 
     public SearchRepositoryImpl(Connection conn) {

@@ -10,7 +10,6 @@ import ru.sumenkov.dspsql.model.input.JsonInputSearchModel;
 import ru.sumenkov.dspsql.model.input.JsonInputStatModel;
 import ru.sumenkov.dspsql.model.output.JsonOutputSearchModel;
 import ru.sumenkov.dspsql.model.output.JsonOutputStatModel;
-import ru.sumenkov.dspsql.model.output.SearchCriteriaOutputModel;
 import ru.sumenkov.dspsql.repository.StatRepository;
 import ru.sumenkov.dspsql.repository.impl.InitRepositoryImpl;
 import ru.sumenkov.dspsql.repository.impl.StatRepositoryImpl;
@@ -31,8 +30,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,8 +55,6 @@ public class Main {
 
             properties.load(new FileReader(fileProperties));
 
-            JsonOutputStatModel jsonOutputStatModel = new JsonOutputStatModel();
-
             try (Connection conn = DriverManager.getConnection(properties.getProperty("url"), properties)) {
                 boolean init = new InitRepositoryImpl(conn).initTables();
                 if (!init) {
@@ -71,15 +66,13 @@ public class Main {
                     JsonInputSearchModel inputSearchModel = objectMapper.readValue(
                             new File(fileInput),
                             JsonInputSearchModel.class);
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-                    System.out.println(inputSearchModel);
-                    new SearchService().search(inputSearchModel);
+                    JsonOutputSearchModel outputSearchModel = new JsonOutputSearchModel();
+                    SearchService searchService = new SearchService();
 
-                    // saveObject = new SearchService(conn, inputSearchModel);
-                    saveObject = new JsonOutputSearchModel(new SearchCriteriaOutputModel(new HashMap<String, Object>(), new ArrayList<>()));
+                    outputSearchModel.setResults(searchService.search(conn, inputSearchModel));
 
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    saveObject = outputSearchModel;
 
                 } else if (commandLine.hasOption("st")) {
                     ObjectMapper objectMapper = new ObjectMapper();
@@ -90,6 +83,7 @@ public class Main {
                     String startDate = inputStatModel.getStartDate();
                     String endDate = inputStatModel.getEndDate();
 
+                    JsonOutputStatModel jsonOutputStatModel = new JsonOutputStatModel();
                     jsonOutputStatModel.setTotalDays(getTotalDays(startDate, endDate));
 
                     StatRepository statRepository = new StatRepositoryImpl(conn, startDate, endDate);
