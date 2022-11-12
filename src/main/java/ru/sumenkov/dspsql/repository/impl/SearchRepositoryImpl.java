@@ -35,7 +35,7 @@ public class SearchRepositoryImpl implements SearchRepository {
             "HAVING SUM(pr.price) BETWEEN %d AND %d";
     private static final String QUERY_BAD_CUSTOMERS = "SELECT b.firstname, b.lastname " +
             "FROM buyers b " +
-            "JOIN purchases pur ON pur.buyer_id = b.id " +
+            "LEFT JOIN purchases pur ON pur.buyer_id = b.id " +
             "GROUP BY b.id " +
             "ORDER BY COUNT(*) ASC" +
             "LIMIT %d";
