@@ -12,11 +12,6 @@ public class SearchCriteriaOutputModel {
     public SearchCriteriaOutputModel() {
     }
 
-//    public SearchCriteriaOutputModel(Map<String, Object> criteria, List<BuyerModel> results) {
-//        this.criteria = criteria;
-//        this.results = results;
-//    }
-
     public Map<String, Object> getCriteria() {
         return criteria;
     }
@@ -32,10 +27,6 @@ public class SearchCriteriaOutputModel {
     public void setResults(List<BuyerModel> results) {
         this.results = results;
     }
-
-//    public void setBuyer(BuyerModel buyer) {
-//        this.results.add(buyer);
-//    }
 
     @Override
     public String toString() {
