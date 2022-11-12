@@ -17,12 +17,16 @@ public class SearchRepositoryImpl implements SearchRepository {
 
     private final Connection conn;
 
-    private static final String QUERY_BUYER = "SELECT FIRSTNAME, LASTNAME FROM BUYERS WHERE LASTNAME='%s'";
-    private static final String QUERY_PRODUCT = "";
+    private static final String QUERY_BUYER = "SELECT firstname, lastname FROM buyers WHERE lastname='%s'";
+    private static final String QUERY_PRODUCT = "SELECT b.firstname, b.lastname FROM buyers b " +
+            "JOIN purchases pur ON b.id = pur.buyer_id " +
+            "JOIN products pr ON pur.product_id = pr.id " +
+            "WHERE pr.name = '%s' " +
+            "GROUP BY b.id HAVING COUNT(*) >= %d";
     private static final String QUERY_EXPENSES = "";
     private static final String QUERY_BAD_CUSTOMERS = "SELECT b.firstname, b.lastname FROM buyers b " +
-            "LEFT JOIN purchases pur ON pur.buyer_id = b.id " +
-            "GROUP BY b.firstname, b.lastname " +
+            "JOIN purchases pur ON pur.buyer_id = b.id " +
+            "GROUP BY b.id " +
             "ORDER BY COUNT(*) LIMIT %d";
 
     public SearchRepositoryImpl(Connection conn) {

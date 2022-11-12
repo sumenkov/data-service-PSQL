@@ -1,7 +1,7 @@
 {
   "criterias": [
     {"lastName": "Иванов"},
-    {"productName": "Яблоко", "minTimes": 2},
+    {"productName": "Ананас", "minTimes": 2},
     {"minExpenses": 90, "maxExpenses": 4000},
     {"badCustomers": 3}
   ]
