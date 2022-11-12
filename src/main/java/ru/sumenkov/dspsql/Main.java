@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.commons.cli.*;
 
+import ru.sumenkov.dspsql.model.ErrorModel;
 import ru.sumenkov.dspsql.model.input.JsonInputSearchModel;
 import ru.sumenkov.dspsql.model.input.JsonInputStatModel;
 import ru.sumenkov.dspsql.model.output.JsonOutputSearchModel;
@@ -36,20 +37,27 @@ import java.util.logging.Logger;
 
 public class Main {
     private static final Logger log = Logger.getLogger(Main.class.getName());
+
     public static void main(String[] args) {
+
+        CommandLineParser commandLineParser = new DefaultParser();
+        Options options = new LaunchOptions().launchOptions();
+
+        if (args.length == 0) helper(options);
+
+        CommandLine commandLine;
         try {
-            CommandLineParser commandLineParser = new DefaultParser();
-            Options options = new LaunchOptions().launchOptions();
+            commandLine = commandLineParser.parse(options, args);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        String[] arguments = commandLine.getArgs();
+        String fileInput = arguments[0];
+        String fileOutput = arguments[1];
 
-            if (args.length == 0) helper(options);
+        Object saveObject = new Object();
 
-            CommandLine commandLine = commandLineParser.parse(options, args);
-            String[] arguments = commandLine.getArgs();
-            String fileInput = arguments[0];
-
-            String fileOutput = arguments[1];
-            Object saveObject = new Object();
-
+        try {
             File fileProperties = new File("src/main/resources/db.properties");
             Properties properties = new Properties();
 
@@ -97,8 +105,11 @@ public class Main {
 
         } catch (SQLException e) {
             log.log(Level.SEVERE, "Fail open connect", e);
-        } catch (ParseException e) {
-            log.log(Level.SEVERE, "Fail parse options command line", e);
+            try {
+                SaveJson.save(fileOutput, new ErrorModel("Fail open connect"));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         } catch (FileNotFoundException e) {
             log.log(Level.SEVERE, "Fail, file not found", e);
         } catch (StreamReadException e) {
