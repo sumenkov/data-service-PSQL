@@ -30,12 +30,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Main {
-    private static final Logger log = Logger.getLogger(Main.class.getName());
-
     public static void main(String[] args) {
 
         CommandLineParser commandLineParser = new DefaultParser();
@@ -98,33 +94,13 @@ public class Main {
             SaveJson.save(fileOutput, saveObject);
 
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Fail open connect", e);
-            try {
-                SaveJson.save(fileOutput, new ErrorModel("Ошибка соединения с БД"));
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            SaveJson.save(fileOutput, new ErrorModel("Ошибка соединения с БД"));
         } catch (FileNotFoundException e) {
-            log.log(Level.SEVERE, "Fail, file not found", e);
-            try {
-                SaveJson.save(fileOutput, new ErrorModel("Файл input не найден"));
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            SaveJson.save(fileOutput, new ErrorModel("Файл input не найден"));
         } catch (DatabindException e) {
-            log.log(Level.SEVERE, "Fail Data bind", e);
-            try {
-                SaveJson.save(fileOutput, new ErrorModel("Не получилось собрать json для сохранения"));
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            SaveJson.save(fileOutput, new ErrorModel("Не получилось собрать json для сохранения"));
         } catch (IOException e) {
-            log.log(Level.SEVERE, "Fail save file", e);
-            try {
-                SaveJson.save(fileOutput, new ErrorModel("Не удалось сохранить файл"));
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            SaveJson.save(fileOutput, new ErrorModel("Не удалось сохранить файл"));
         }
     }
 
@@ -137,21 +113,17 @@ public class Main {
     private static long getTotalDays(String startDate, String endDate) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        try {
-            LocalDateTime date1 = LocalDate.parse(startDate, dtf).atStartOfDay();
-            LocalDateTime date2 = LocalDate.parse(endDate, dtf).atStartOfDay();
+        LocalDateTime date1 = LocalDate.parse(startDate, dtf).atStartOfDay();
+        LocalDateTime date2 = LocalDate.parse(endDate, dtf).atStartOfDay();
 
-            int days = 0;
-            while(date1.isBefore(date2.plusDays(1))) {
-                if (!DayOfWeek.SATURDAY.equals(date1.getDayOfWeek())
-                        && !DayOfWeek.SUNDAY.equals(date1.getDayOfWeek())) {
-                    days++;
-                }
-                date1 = date1.plusDays(1);
+        int days = 0;
+        while(date1.isBefore(date2.plusDays(1))) {
+            if (!DayOfWeek.SATURDAY.equals(date1.getDayOfWeek())
+                    && !DayOfWeek.SUNDAY.equals(date1.getDayOfWeek())) {
+                days++;
             }
-            return days;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            date1 = date1.plusDays(1);
         }
+        return days;
     }
 }

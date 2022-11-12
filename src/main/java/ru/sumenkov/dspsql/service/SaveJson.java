@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class SaveJson {
 
-    public static void save(String fileOutput, Object json) throws IOException {
+    public static void save(String fileOutput, Object json) {
         ObjectMapper objectMapper = new ObjectMapper();
 
         // Делаем отступы в 4 пробела (1 таб)
@@ -19,6 +19,10 @@ public class SaveJson {
         printer.indentObjectsWith(indenter);
         printer.indentArraysWith(indenter);
 
-        objectMapper.writer(printer).writeValue(new File(fileOutput), json);
+        try {
+            objectMapper.writer(printer).writeValue(new File(fileOutput), json);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
