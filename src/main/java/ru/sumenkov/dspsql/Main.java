@@ -5,11 +5,11 @@ import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.commons.cli.*;
+
 import ru.sumenkov.dspsql.model.input.JsonInputSearchModel;
 import ru.sumenkov.dspsql.model.input.JsonInputStatModel;
 import ru.sumenkov.dspsql.model.output.JsonOutputSearchModel;
 import ru.sumenkov.dspsql.model.output.JsonOutputStatModel;
-import ru.sumenkov.dspsql.model.output.SearchBuyersOutputModel;
 import ru.sumenkov.dspsql.model.output.SearchCriteriaOutputModel;
 import ru.sumenkov.dspsql.repository.StatRepository;
 import ru.sumenkov.dspsql.repository.impl.InitRepositoryImpl;
@@ -55,7 +55,6 @@ public class Main {
 
             File fileProperties = new File("src/main/resources/db.properties");
             Properties properties = new Properties();
-//            StatRepository statRepository;
 
             properties.load(new FileReader(fileProperties));
 
@@ -72,12 +71,10 @@ public class Main {
                     JsonInputSearchModel inputSearchModel = objectMapper.readValue(
                             new File(fileInput),
                             JsonInputSearchModel.class);
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
                     System.out.println(inputSearchModel);
                     new SearchService().search(inputSearchModel);
-
-
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
                     // saveObject = new SearchService(conn, inputSearchModel);
                     saveObject = new JsonOutputSearchModel(new SearchCriteriaOutputModel(new HashMap<String, Object>(), new ArrayList<>()));
