@@ -94,21 +94,18 @@ public class Main {
                                     jsonOutputStatModel.getTotalExpenses()
                                             + statBuyer.getTotalExpenses());
                         }
-
                         jsonOutputStatModel.setAvgExpenses(
                                 round(
                                         jsonOutputStatModel.getTotalExpenses()
                                                 / jsonOutputStatModel.getCustomers().size()));
-
                         saveObject = jsonOutputStatModel;
+                        break;
                     }
                     default:
                         new SaveError("Неизвестный аргумент запуска");
                 }
             }
-
             SaveJson.save(fileOutput, saveObject);
-
         } catch (SQLException | IOException e) {
             new SaveError(e.getMessage());
         }
