@@ -9,6 +9,7 @@ import ru.sumenkov.dspsql.model.output.JsonOutputSearchModel;
 import ru.sumenkov.dspsql.model.output.JsonOutputStatModel;
 import ru.sumenkov.dspsql.model.output.StatBuyersOutputModel;
 import ru.sumenkov.dspsql.repository.StatRepository;
+import ru.sumenkov.dspsql.repository.impl.SearchRepositoryImpl;
 import ru.sumenkov.dspsql.repository.impl.StatRepositoryImpl;
 import ru.sumenkov.dspsql.service.SaveJson;
 import ru.sumenkov.dspsql.service.SearchService;
@@ -61,9 +62,9 @@ public class Main {
                                 JsonInputSearchModel.class);
 
                         JsonOutputSearchModel outputSearchModel = new JsonOutputSearchModel();
-                        SearchService searchService = new SearchService();
+                        SearchService searchService = new SearchService(new SearchRepositoryImpl(conn));
 
-                        outputSearchModel.setResults(searchService.search(conn, inputSearchModel));
+                        outputSearchModel.setResults(searchService.search(inputSearchModel));
 
                         saveObject = outputSearchModel;
                         break;
