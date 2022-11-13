@@ -1,7 +1,5 @@
 package ru.sumenkov.dspsql.model.output;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 
 public class JsonOutputStatModel {
@@ -31,24 +29,22 @@ public class JsonOutputStatModel {
 
     public void setCustomers(List<StatBuyersOutputModel> customers) {
         this.customers = customers;
-        this.totalExpenses = 0;
-        this.avgExpenses = 0;
-        int allBuyers = 0;
-
-        for (StatBuyersOutputModel statBuyer: customers) {
-            allBuyers++;
-            this.totalExpenses += statBuyer.getTotalExpenses();
-        }
-
-        this.avgExpenses = round(totalExpenses / allBuyers);
     }
 
     public double getTotalExpenses() {
         return totalExpenses;
     }
 
+    public void setTotalExpenses(double totalExpenses) {
+        this.totalExpenses = totalExpenses;
+    }
+
     public double getAvgExpenses() {
         return avgExpenses;
+    }
+
+    public void setAvgExpenses(double avgExpenses) {
+        this.avgExpenses = avgExpenses;
     }
 
     @Override
@@ -60,11 +56,5 @@ public class JsonOutputStatModel {
                 ", totalExpenses=" + totalExpenses +
                 ", avgExpenses=" + avgExpenses +
                 '}';
-    }
-
-    private double round(double value) {
-        BigDecimal bd = BigDecimal.valueOf(value);
-        bd = bd.setScale(2, RoundingMode.HALF_UP);
-        return bd.doubleValue();
     }
 }

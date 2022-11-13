@@ -6,6 +6,7 @@ import ru.sumenkov.dspsql.model.input.JsonInputSearchModel;
 import ru.sumenkov.dspsql.model.input.JsonInputStatModel;
 import ru.sumenkov.dspsql.model.output.JsonOutputSearchModel;
 import ru.sumenkov.dspsql.model.output.JsonOutputStatModel;
+import ru.sumenkov.dspsql.model.output.StatBuyersOutputModel;
 import ru.sumenkov.dspsql.repository.StatRepository;
 import ru.sumenkov.dspsql.repository.impl.StatRepositoryImpl;
 import ru.sumenkov.dspsql.service.SaveJson;
@@ -15,6 +16,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -24,6 +27,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -78,7 +82,19 @@ public class Main {
                         jsonOutputStatModel.setTotalDays(getTotalDays(startDate, endDate));
 
                         StatRepository statRepository = new StatRepositoryImpl(conn, startDate, endDate);
-                        jsonOutputStatModel.setCustomers(statRepository.getStatFromDB());
+                        List<StatBuyersOutputModel> statBuyersList = statRepository.getStatFromDB();
+                        jsonOutputStatModel.setCustomers(statBuyersList);
+
+                        for (StatBuyersOutputModel statBuyer: statBuyersList) {
+                            jsonOutputStatModel.setTotalExpenses(
+                                    jsonOutputStatModel.getTotalExpenses()
+                                            + statBuyer.getTotalExpenses());
+                        }
+
+                        jsonOutputStatModel.setAvgExpenses(
+                                round(
+                                        jsonOutputStatModel.getTotalExpenses()
+                                                / jsonOutputStatModel.getCustomers().size()));
 
                         saveObject = jsonOutputStatModel;
                     }
@@ -112,5 +128,11 @@ public class Main {
             new SaveError(e.getMessage());
         }
         return 0;
+    }
+
+    private static double round(double value) {
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }
