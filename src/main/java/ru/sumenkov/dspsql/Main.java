@@ -1,5 +1,6 @@
 package ru.sumenkov.dspsql;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ru.sumenkov.dspsql.model.input.JsonInputSearchModel;
@@ -28,8 +29,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Properties;
 
 public class Main {
     public static void main(String[] args) {
@@ -46,13 +45,13 @@ public class Main {
         Object saveObject = new Object();
 
         try {
-            File fileProperties = new File(Objects.requireNonNull(
-                    Main.class.getResource("/db.properties")).getFile());
-            Properties properties = new Properties();
-            properties.load(new FileReader(fileProperties));
-
-            try (Connection conn = DriverManager.getConnection(properties.getProperty("url"), properties)) {
-
+            ObjectMapper configObjectMapper = new ObjectMapper();
+            JsonNode jsonNode = configObjectMapper.readTree(new FileReader("config.json"));
+            try (Connection conn = DriverManager.getConnection(
+                    jsonNode.get("url").asText(),
+                    jsonNode.get("user").asText(),
+                    jsonNode.get("password").asText()))
+            {
                 switch (commandRun) {
                     case "search":
                     {
