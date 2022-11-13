@@ -3,7 +3,7 @@ package ru.sumenkov.dspsql.model.output;
 import java.util.List;
 
 public class JsonOutputSearchModel {
-    private final String TYPE = "search";
+    private static final String TYPE = "search";
     private List<SearchCriteriaOutputModel> results;
 
     public JsonOutputSearchModel() {

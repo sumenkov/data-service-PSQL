@@ -1,4 +1,56 @@
 {
-    "message" : "Fail open connect",
-    "type" : "error"
+    "totalDays" : 65,
+    "customers" : [
+        {
+            "name" : "Кривошеев Пётр",
+            "purchases" : [
+                {
+                    "name" : "Ананас",
+                    "price" : 320.8
+                },
+                {
+                    "name" : "Ананас",
+                    "price" : 320.8
+                },
+                {
+                    "name" : "Абрикос",
+                    "price" : 50.3
+                }
+            ],
+            "totalExpenses" : 691.9
+        },
+        {
+            "name" : "Иванов Антон",
+            "purchases" : [
+                {
+                    "name" : "Яблоко",
+                    "price" : 135.25
+                }
+            ],
+            "totalExpenses" : 135.25
+        },
+        {
+            "name" : "Семёнов Семён",
+            "purchases" : [
+                {
+                    "name" : "Киви",
+                    "price" : 98.5
+                }
+            ],
+            "totalExpenses" : 98.5
+        },
+        {
+            "name" : "Николенко Иван",
+            "purchases" : [
+                {
+                    "name" : "Яблоко",
+                    "price" : 135.25
+                }
+            ],
+            "totalExpenses" : 135.25
+        }
+    ],
+    "totalExpenses" : 1060.9,
+    "avgExpenses" : 265.23,
+    "type" : "stat"
 }

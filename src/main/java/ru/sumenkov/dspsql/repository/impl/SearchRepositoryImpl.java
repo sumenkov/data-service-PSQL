@@ -1,6 +1,6 @@
 package ru.sumenkov.dspsql.repository.impl;
 
-import ru.sumenkov.dspsql.SaveException;
+import ru.sumenkov.dspsql.SaveError;
 import ru.sumenkov.dspsql.model.db.BuyerModel;
 import ru.sumenkov.dspsql.repository.SearchRepository;
 
@@ -47,7 +47,7 @@ public class SearchRepositoryImpl implements SearchRepository {
             ResultSet rs = stmt.executeQuery(String.format(QUERY_BUYER, lastname));
             return setQuery(rs);
         } catch (SQLException e) {
-            new SaveException(e.getMessage());
+            new SaveError(e.getMessage());
             return null;
         }
     }
@@ -58,7 +58,7 @@ public class SearchRepositoryImpl implements SearchRepository {
             ResultSet rs = stmt.executeQuery(String.format(QUERY_PRODUCT, name, amount));
             return setQuery(rs);
         } catch (SQLException e) {
-            new SaveException(e.getMessage());
+            new SaveError(e.getMessage());
             return null;
         }
     }
@@ -69,7 +69,7 @@ public class SearchRepositoryImpl implements SearchRepository {
             ResultSet rs = stmt.executeQuery(String.format(QUERY_EXPENSES, min, max));
             return setQuery(rs);
         } catch (SQLException e) {
-            new SaveException(e.getMessage());
+            new SaveError(e.getMessage());
             return null;
         }
     }
@@ -80,7 +80,7 @@ public class SearchRepositoryImpl implements SearchRepository {
             ResultSet rs = stmt.executeQuery(String.format(QUERY_BAD_CUSTOMERS, amount));
             return setQuery(rs);
         } catch (SQLException e) {
-            new SaveException(e.getMessage());
+            new SaveError(e.getMessage());
             return null;
         }
     }

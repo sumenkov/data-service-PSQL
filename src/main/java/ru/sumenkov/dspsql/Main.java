@@ -2,8 +2,6 @@ package ru.sumenkov.dspsql;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.apache.commons.cli.*;
-
 import ru.sumenkov.dspsql.model.input.JsonInputSearchModel;
 import ru.sumenkov.dspsql.model.input.JsonInputStatModel;
 import ru.sumenkov.dspsql.model.output.JsonOutputSearchModel;
@@ -26,84 +24,75 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.Objects;
 import java.util.Properties;
 
 public class Main {
     public static void main(String[] args) {
 
-        CommandLineParser commandLineParser = new DefaultParser();
-        Options options = new LaunchOptions().launchOptions();
-
-        if (args.length == 0) {
-            helper(options);
-            return;
+        if (args.length != 3) {
+            System.out.println("Error");
         }
 
-        CommandLine commandLine;
-        try {
-            commandLine = commandLineParser.parse(options, args);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        String[] arguments = commandLine.getArgs();
-        String fileInput = arguments[0];
-        String fileOutput = arguments[1];
+        // добавить проверку, файл или нет !!!
+        String commandRun = args[0];
+        String fileInput = args[1];
+        String fileOutput = args[2];
 
         Object saveObject = new Object();
 
         try {
-            File fileProperties = new File("src/main/resources/db.properties");
+            File fileProperties = new File(Objects.requireNonNull(
+                    Main.class.getResource("/db.properties")).getFile());
             Properties properties = new Properties();
-
             properties.load(new FileReader(fileProperties));
 
             try (Connection conn = DriverManager.getConnection(properties.getProperty("url"), properties)) {
 
-                if (commandLine.hasOption("s")) {
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    JsonInputSearchModel inputSearchModel = objectMapper.readValue(
-                            new File(fileInput),
-                            JsonInputSearchModel.class);
+                switch (commandRun) {
+                    case "search":
+                    {
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        JsonInputSearchModel inputSearchModel = objectMapper.readValue(
+                                new File(fileInput),
+                                JsonInputSearchModel.class);
 
-                    JsonOutputSearchModel outputSearchModel = new JsonOutputSearchModel();
-                    SearchService searchService = new SearchService();
+                        JsonOutputSearchModel outputSearchModel = new JsonOutputSearchModel();
+                        SearchService searchService = new SearchService();
 
-                    outputSearchModel.setResults(searchService.search(conn, inputSearchModel));
+                        outputSearchModel.setResults(searchService.search(conn, inputSearchModel));
 
-                    saveObject = outputSearchModel;
+                        saveObject = outputSearchModel;
+                        break;
+                    }
+                    case "stat": {
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        JsonInputStatModel inputStatModel = objectMapper.readValue(
+                                new File(fileInput),
+                                JsonInputStatModel.class);
 
-                } else if (commandLine.hasOption("st")) {
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    JsonInputStatModel inputStatModel = objectMapper.readValue(
-                            new File(fileInput),
-                            JsonInputStatModel.class);
+                        String startDate = inputStatModel.getStartDate();
+                        String endDate = inputStatModel.getEndDate();
 
-                    String startDate = inputStatModel.getStartDate();
-                    String endDate = inputStatModel.getEndDate();
+                        JsonOutputStatModel jsonOutputStatModel = new JsonOutputStatModel();
+                        jsonOutputStatModel.setTotalDays(getTotalDays(startDate, endDate));
 
-                    JsonOutputStatModel jsonOutputStatModel = new JsonOutputStatModel();
-                    jsonOutputStatModel.setTotalDays(getTotalDays(startDate, endDate));
+                        StatRepository statRepository = new StatRepositoryImpl(conn, startDate, endDate);
+                        jsonOutputStatModel.setCustomers(statRepository.getStatFromDB());
 
-                    StatRepository statRepository = new StatRepositoryImpl(conn, startDate, endDate);
-                    jsonOutputStatModel.setCustomers(statRepository.getStatFromDB());
-
-                    saveObject = jsonOutputStatModel;
+                        saveObject = jsonOutputStatModel;
+                    }
                 }
             }
 
             SaveJson.save(fileOutput, saveObject);
 
         } catch (SQLException | IOException e) {
-            new SaveException(e.getMessage());
+            new SaveError(e.getMessage());
         }
     }
 
-    private static void helper(Options options){
-        HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("data-service-PSQL", options, true);
-    }
-
-    private static long getTotalDays(String startDate, String endDate) {
+    private static int getTotalDays(String startDate, String endDate) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         try {
@@ -120,7 +109,7 @@ public class Main {
             }
             return days;
         } catch (Exception e) {
-            new SaveException(e.getMessage());
+            new SaveError(e.getMessage());
         }
         return 0;
     }

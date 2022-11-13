@@ -1,7 +1,7 @@
 package ru.sumenkov.dspsql.model;
 
 public class ErrorModel {
-    private final String TYPE = "error";
+    private static final String TYPE = "error";
     private final String message;
 
     public ErrorModel(String message) {

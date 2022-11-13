@@ -1,6 +1,6 @@
 package ru.sumenkov.dspsql.repository.impl;
 
-import ru.sumenkov.dspsql.SaveException;
+import ru.sumenkov.dspsql.SaveError;
 import ru.sumenkov.dspsql.model.db.BuyerModel;
 import ru.sumenkov.dspsql.model.db.ProductModel;
 import ru.sumenkov.dspsql.model.output.StatBuyersOutputModel;
@@ -52,7 +52,7 @@ public class StatRepositoryImpl implements StatRepository {
                 }
             }
         } catch (SQLException e) {
-            new SaveException(e.getMessage());
+            new SaveError(e.getMessage());
             return null;
         }
         return statBuyersOutputList;

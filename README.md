@@ -10,11 +10,15 @@
 
 В командной строке перейдите в директорию, в которую разархивировали код программы:
 
-    cd /home/user/"path to the program directory"
+    linux: cd /home/user/"path to the program directory"
+    
+    windows: cd C:\user\"path to the program directory"
 
 Выполните команду:
 
-    ./mvnw clean package
+    linux: ./mvnw clean package
+    
+    windows: mvnw.cmd clean package
 
 В появившейся новой директории target выберите файл: dbf-and-excel.jar
 
