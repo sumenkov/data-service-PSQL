@@ -25,11 +25,11 @@
 ## Запуск программы
 Доступные аргументы для запуска:
 
---search    поиск данных по критериям указанным в файле input.json (пример файле в директории test)
+search - поиск данных по критериям указанным в файле input.json (пример файле в директории test)
 
---stat      статистика по покупателям за период указанный в файле input.json (пример файле в директории test)
+stat - статистика по покупателям за период указанный в файле input.json (пример файле в директории test)
 
-    java -jar data-service-PSQL.jar --stat input.json output.json
+    java -jar data-service-PSQL.jar stat input.json output.json
 
 
 ### Обработка ошибок:
