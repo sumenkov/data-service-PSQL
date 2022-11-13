@@ -1,5 +1,6 @@
 package ru.sumenkov.dspsql.service;
 
+import ru.sumenkov.dspsql.Main;
 import ru.sumenkov.dspsql.SaveError;
 import ru.sumenkov.dspsql.model.db.BuyerModel;
 import ru.sumenkov.dspsql.model.input.JsonInputSearchModel;
@@ -45,7 +46,7 @@ public class SearchService {
                 return searchRepository.searchBadCustomers(
                                 (Integer) criterion.get("badCustomers"));
             default:
-                new SaveError("Неизвестный запрос");
+                new SaveError(Main.fileOutput, "Неизвестный запрос");
         }
         return Collections.emptyList();
     }

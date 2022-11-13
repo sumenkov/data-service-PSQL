@@ -15,7 +15,7 @@ public class GetQuery {
         try {
             properties.load(new FileReader(fileProperties));
         } catch (IOException e) {
-            new SaveError("Не смог прочитать файл запросов к БД");
+            new SaveError(Main.fileOutput,"Не смог прочитать файл запросов к БД");
         }
         return properties.getProperty(nameQuery);
     }

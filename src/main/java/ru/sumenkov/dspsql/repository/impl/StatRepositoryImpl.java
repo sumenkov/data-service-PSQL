@@ -1,6 +1,7 @@
 package ru.sumenkov.dspsql.repository.impl;
 
 import ru.sumenkov.dspsql.GetQuery;
+import ru.sumenkov.dspsql.Main;
 import ru.sumenkov.dspsql.SaveError;
 import ru.sumenkov.dspsql.model.db.BuyerModel;
 import ru.sumenkov.dspsql.model.db.ProductModel;
@@ -58,7 +59,7 @@ public class StatRepositoryImpl implements StatRepository {
                 buyersOutput.setTotalExpenses(tmpTotalExpenses);
             }
         } catch (SQLException e) {
-            new SaveError(e.getMessage());
+            new SaveError(Main.fileOutput, e.getMessage());
             return null;
         }
         return statBuyersOutputList;

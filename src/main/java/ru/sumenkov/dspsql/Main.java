@@ -33,15 +33,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class Main {
+    public static String fileOutput;
     public static void main(String[] args) {
 
         if (args.length != 3) {
-            new SaveError("Не верное количество аргументов запуска");
+            System.out.println("Не верное количество аргументов запуска");
         }
 
         String commandRun = args[0];
         String fileInput = args[1];
-        String fileOutput = args[2]; // выходной файл, ошибки писать тут
+        fileOutput = args[2]; // выходной файл, ошибки писать тут
 
         Object saveObject = new Object();
 
@@ -96,30 +97,35 @@ public class Main {
                         break;
                     }
                     default:
-                        new SaveError("Неизвестный аргумент запуска");
+                        new SaveError(fileOutput, "Неизвестный аргумент запуска");
                 }
             }
             SaveJson.save(fileOutput, saveObject);
         } catch (SQLException | IOException e) {
-            new SaveError(e.getMessage());
+            new SaveError(fileOutput, e.getMessage());
         }
     }
 
     private static int getTotalDays(String startDate, String endDate) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        LocalDateTime date1 = LocalDate.parse(startDate, dtf).atStartOfDay();
-        LocalDateTime date2 = LocalDate.parse(endDate, dtf).atStartOfDay();
+        try {
+            LocalDateTime date1 = LocalDate.parse(startDate, dtf).atStartOfDay();
+            LocalDateTime date2 = LocalDate.parse(endDate, dtf).atStartOfDay();
 
-        int days = 0;
-        while(date1.isBefore(date2.plusDays(1))) {
-            if (!DayOfWeek.SATURDAY.equals(date1.getDayOfWeek())
-                    && !DayOfWeek.SUNDAY.equals(date1.getDayOfWeek())) {
-                days++;
+            int days = 0;
+            while (date1.isBefore(date2.plusDays(1))) {
+                if (!DayOfWeek.SATURDAY.equals(date1.getDayOfWeek())
+                        && !DayOfWeek.SUNDAY.equals(date1.getDayOfWeek())) {
+                    days++;
+                }
+                date1 = date1.plusDays(1);
             }
-            date1 = date1.plusDays(1);
+            return days;
+        } catch (Exception e) {
+            new SaveError(Main.fileOutput, e.getMessage());
+            return 0;
         }
-        return days;
     }
 
     private static double round(double value) {

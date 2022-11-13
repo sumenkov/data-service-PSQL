@@ -3,6 +3,7 @@ package ru.sumenkov.dspsql.service;
 import com.fasterxml.jackson.core.util.DefaultIndenter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ru.sumenkov.dspsql.Main;
 import ru.sumenkov.dspsql.SaveError;
 
 import java.io.File;
@@ -23,7 +24,7 @@ public class SaveJson {
         try {
             objectMapper.writer(printer).writeValue(new File(fileOutput), json);
         } catch (IOException e) {
-            new SaveError(e.getMessage());
+            new SaveError(Main.fileOutput, e.getMessage());
         }
     }
 }
