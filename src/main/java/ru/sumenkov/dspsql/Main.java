@@ -97,7 +97,7 @@ public class Main {
                         jsonOutputStatModel.setAvgExpenses(
                                 round(
                                         jsonOutputStatModel.getTotalExpenses()
-                                                / jsonOutputStatModel.getCustomers().size()));
+                                                / statBuyersList.size()));
                         saveObject = jsonOutputStatModel;
                         break;
                     }
