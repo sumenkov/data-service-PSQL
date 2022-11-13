@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -33,6 +34,12 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread t, Throwable e) {
+                new SaveError(e.getMessage());
+            }
+        });
 
         if (args.length != 3) {
             new SaveError("Не верное количество аргументов запуска");
@@ -49,9 +56,7 @@ public class Main {
             ObjectMapper configObjectMapper = new ObjectMapper();
             JsonNode jsonNode = configObjectMapper.readTree(new FileReader("config.json"));
             try (Connection conn = DriverManager.getConnection(
-                    jsonNode.get("url").asText(),
-                    jsonNode.get("user").asText(),
-                    jsonNode.get("password").asText()))
+                    jsonNode.get("url").asText(), jsonNode.get("user").asText(), jsonNode.get("password").asText()))
             {
                 switch (commandRun) {
                     case "search":
