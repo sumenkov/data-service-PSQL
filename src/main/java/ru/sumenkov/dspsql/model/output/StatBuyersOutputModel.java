@@ -9,7 +9,8 @@ public class StatBuyersOutputModel {
     private List<ProductModel> purchases;
     private double totalExpenses;
 
-    public StatBuyersOutputModel() {}
+    public StatBuyersOutputModel() {
+    }
 
     public String getName() {
         return name;

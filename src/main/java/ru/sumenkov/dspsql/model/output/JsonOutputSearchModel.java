@@ -9,7 +9,7 @@ public class JsonOutputSearchModel {
     public JsonOutputSearchModel() {
     }
 
-    public String getTYPE() {
+    public String getType() {
         return TYPE;
     }
 

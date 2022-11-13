@@ -4,7 +4,8 @@ public class JsonInputStatModel {
     private String startDate;
     private String endDate;
 
-    public JsonInputStatModel() {}
+    public JsonInputStatModel() {
+    }
 
     public String getStartDate() {
         return startDate;

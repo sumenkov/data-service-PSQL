@@ -13,7 +13,7 @@ public class JsonOutputStatModel {
 
     public JsonOutputStatModel() {}
 
-    public String getTYPE() {
+    public String getType() {
         return TYPE;
     }
 

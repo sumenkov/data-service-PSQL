@@ -1,4 +1,4 @@
 {
-    "message" : "�����: � pg_hba.conf ��� ������ ��� ���������� \"10.195.72.126\", ������������ \"user\", ���� \"dspsql\", SSL ����.",
+    "message" : "error",
     "type" : "error"
 }

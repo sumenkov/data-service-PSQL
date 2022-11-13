@@ -8,7 +8,7 @@ public class ErrorModel {
         this.message = message;
     }
 
-    public String getTYPE() {
+    public String getType() {
         return TYPE;
     }
 

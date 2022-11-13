@@ -7,7 +7,6 @@ public class JsonInputSearchModel {
     private List<Map<String, Object>> criterias;
 
     public JsonInputSearchModel(){
-
     }
 
     public List<Map<String, Object>> getCriterias() {
