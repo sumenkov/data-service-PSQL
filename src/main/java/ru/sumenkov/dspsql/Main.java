@@ -45,7 +45,6 @@ public class Main {
             new SaveError("Не верное количество аргументов запуска");
         }
 
-        // добавить проверку, файл или нет !!!
         String commandRun = args[0];
         String fileInput = args[1];
         String fileOutput = args[2];
@@ -103,6 +102,8 @@ public class Main {
 
                         saveObject = jsonOutputStatModel;
                     }
+                    default:
+                        new SaveError("Неизвестный аргумент запуска");
                 }
             }
 
