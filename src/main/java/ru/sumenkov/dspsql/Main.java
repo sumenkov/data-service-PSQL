@@ -34,12 +34,6 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-            @Override
-            public void uncaughtException(Thread t, Throwable e) {
-                new SaveError(e.getMessage());
-            }
-        });
 
         if (args.length != 3) {
             new SaveError("Не верное количество аргументов запуска");
@@ -47,7 +41,7 @@ public class Main {
 
         String commandRun = args[0];
         String fileInput = args[1];
-        String fileOutput = args[2];
+        String fileOutput = args[2]; // выходной файл, ошибки писать тут
 
         Object saveObject = new Object();
 
@@ -114,23 +108,18 @@ public class Main {
     private static int getTotalDays(String startDate, String endDate) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        try {
-            LocalDateTime date1 = LocalDate.parse(startDate, dtf).atStartOfDay();
-            LocalDateTime date2 = LocalDate.parse(endDate, dtf).atStartOfDay();
+        LocalDateTime date1 = LocalDate.parse(startDate, dtf).atStartOfDay();
+        LocalDateTime date2 = LocalDate.parse(endDate, dtf).atStartOfDay();
 
-            int days = 0;
-            while(date1.isBefore(date2.plusDays(1))) {
-                if (!DayOfWeek.SATURDAY.equals(date1.getDayOfWeek())
-                        && !DayOfWeek.SUNDAY.equals(date1.getDayOfWeek())) {
-                    days++;
-                }
-                date1 = date1.plusDays(1);
+        int days = 0;
+        while(date1.isBefore(date2.plusDays(1))) {
+            if (!DayOfWeek.SATURDAY.equals(date1.getDayOfWeek())
+                    && !DayOfWeek.SUNDAY.equals(date1.getDayOfWeek())) {
+                days++;
             }
-            return days;
-        } catch (Exception e) {
-            new SaveError(e.getMessage());
+            date1 = date1.plusDays(1);
         }
-        return 0;
+        return days;
     }
 
     private static double round(double value) {

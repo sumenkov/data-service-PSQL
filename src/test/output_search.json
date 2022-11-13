@@ -61,6 +61,17 @@
                     "lastName" : ""
                 }
             ]
+        },
+        {
+            "criteria" : {
+                "lastName" : "Иванов"
+            },
+            "results" : [
+                {
+                    "firstName" : "Антон",
+                    "lastName" : "Иванов"
+                }
+            ]
         }
     ],
     "type" : "search"

@@ -3,6 +3,7 @@
     {"lastName": "Кривошеев"},
     {"productName": "Ананас", "minTimes": 2},
     {"minExpenses": 100, "maxExpenses": 300},
-    {"badCustomers": 3}
+    {"badCustomers": 3},
+    {"lastName": "Иванов"}
   ]
 }
