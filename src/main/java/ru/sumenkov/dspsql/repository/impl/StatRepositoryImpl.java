@@ -42,14 +42,25 @@ public class StatRepositoryImpl implements StatRepository {
                         .findAny()
                         .orElse(new StatBuyersOutputModel());
 
+                List<ProductModel> productsList;
+
                 if (buyersOutput.getName() == null) {
                     buyersOutput.setName(name);
-                    buyersOutput.setPurchases(getProducts(idProduct));
+                    productsList = getProducts(idProduct);
 
                     statBuyersOutputList.add(buyersOutput);
                 } else {
-                    buyersOutput.setPurchases(getProducts(buyersOutput.getPurchases(), idProduct));
+                    productsList = getProducts(buyersOutput.getPurchases(), idProduct);
                 }
+
+                buyersOutput.setPurchases(productsList);
+
+                double tmpTotalExpenses = 0;
+                for(ProductModel productsModel: productsList) {
+                    tmpTotalExpenses += productsModel.getPrice();
+                }
+
+                buyersOutput.setTotalExpenses(tmpTotalExpenses);
             }
         } catch (SQLException e) {
             new SaveError(e.getMessage());

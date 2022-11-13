@@ -26,15 +26,14 @@ public class StatBuyersOutputModel {
 
     public void setPurchases(List<ProductModel> purchases) {
         this.purchases = purchases;
-        this.totalExpenses = 0;
-
-        for(ProductModel productsModel: purchases) {
-            this.totalExpenses += productsModel.getPrice();
-        }
     }
 
     public double getTotalExpenses() {
         return totalExpenses;
+    }
+
+    public void setTotalExpenses(double totalExpenses) {
+        this.totalExpenses = totalExpenses;
     }
 
     @Override
