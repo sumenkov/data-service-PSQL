@@ -42,7 +42,7 @@ public class Main {
 
         String commandRun = args[0];
         String fileInput = args[1];
-        fileOutput = args[2]; // выходной файл, ошибки писать тут
+        fileOutput = args[2];
 
         Object saveObject = new Object();
 
